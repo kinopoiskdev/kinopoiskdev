@@ -145,8 +145,7 @@ exports.Prisma.MovieScalarFieldEnum = makeEnum({
   type: 'type',
   status: 'status',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  movieId: 'movieId'
+  updatedAt: 'updatedAt'
 });
 
 exports.Prisma.PersonFactScalarFieldEnum = makeEnum({

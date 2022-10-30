@@ -389,7 +389,6 @@ model Movie {
   createdAt                     DateTime            @default(now())
   updatedAt                     DateTime            @updatedAt
   // Relations
-  movieId                       String              @db.ObjectId()
   images                        Image[]
   videos                        Video[]
   seasons                       Season[]

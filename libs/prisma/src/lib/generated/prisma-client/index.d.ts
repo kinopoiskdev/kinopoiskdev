@@ -348,7 +348,6 @@ export type Movie = {
   releaseYears: MovieReleaseYears[]
   createdAt: Date
   updatedAt: Date
-  movieId: string
 }
 
 
@@ -11756,7 +11755,6 @@ export namespace Prisma {
     status: MovieStatus | null
     createdAt: Date | null
     updatedAt: Date | null
-    movieId: string | null
   }
 
   export type MovieMaxAggregateOutputType = {
@@ -11778,7 +11776,6 @@ export namespace Prisma {
     status: MovieStatus | null
     createdAt: Date | null
     updatedAt: Date | null
-    movieId: string | null
   }
 
   export type MovieCountAggregateOutputType = {
@@ -11801,7 +11798,6 @@ export namespace Prisma {
     status: number
     createdAt: number
     updatedAt: number
-    movieId: number
     _all: number
   }
 
@@ -11843,7 +11839,6 @@ export namespace Prisma {
     status?: true
     createdAt?: true
     updatedAt?: true
-    movieId?: true
   }
 
   export type MovieMaxAggregateInputType = {
@@ -11865,7 +11860,6 @@ export namespace Prisma {
     status?: true
     createdAt?: true
     updatedAt?: true
-    movieId?: true
   }
 
   export type MovieCountAggregateInputType = {
@@ -11888,7 +11882,6 @@ export namespace Prisma {
     status?: true
     createdAt?: true
     updatedAt?: true
-    movieId?: true
     _all?: true
   }
 
@@ -12004,7 +11997,6 @@ export namespace Prisma {
     status: MovieStatus | null
     createdAt: Date
     updatedAt: Date
-    movieId: string
     _count: MovieCountAggregateOutputType | null
     _avg: MovieAvgAggregateOutputType | null
     _sum: MovieSumAggregateOutputType | null
@@ -12058,7 +12050,6 @@ export namespace Prisma {
     releaseYears?: boolean | MovieReleaseYearsArgs
     createdAt?: boolean
     updatedAt?: boolean
-    movieId?: boolean
     images?: boolean | ImageFindManyArgs
     videos?: boolean | VideoFindManyArgs
     seasons?: boolean | SeasonFindManyArgs
@@ -13040,8 +13031,7 @@ export namespace Prisma {
     type: 'type',
     status: 'status',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    movieId: 'movieId'
+    updatedAt: 'updatedAt'
   };
 
   export type MovieScalarFieldEnum = (typeof MovieScalarFieldEnum)[keyof typeof MovieScalarFieldEnum]
@@ -13739,7 +13729,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsCompositeListFilter, Enumerable<MovieReleaseYearsObjectEqualityInput>>
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    movieId?: StringFilter | string
     images?: ImageListRelationFilter
     videos?: VideoListRelationFilter
     seasons?: SeasonListRelationFilter
@@ -13784,7 +13773,6 @@ export namespace Prisma {
     releaseYears?: MovieReleaseYearsOrderByCompositeAggregateInput
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    movieId?: SortOrder
     images?: ImageOrderByRelationAggregateInput
     videos?: VideoOrderByRelationAggregateInput
     seasons?: SeasonOrderByRelationAggregateInput
@@ -13822,7 +13810,6 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    movieId?: SortOrder
     _count?: MovieCountOrderByAggregateInput
     _avg?: MovieAvgOrderByAggregateInput
     _max?: MovieMaxOrderByAggregateInput
@@ -13853,7 +13840,6 @@ export namespace Prisma {
     status?: EnumMovieStatusNullableWithAggregatesFilter | MovieStatus | null
     createdAt?: DateTimeWithAggregatesFilter | Date | string
     updatedAt?: DateTimeWithAggregatesFilter | Date | string
-    movieId?: StringWithAggregatesFilter | string
   }
 
   export type VideoCreateInput = {
@@ -14583,7 +14569,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageCreateNestedManyWithoutMovieInput
     videos?: VideoCreateNestedManyWithoutMovieInput
     seasons?: SeasonCreateNestedManyWithoutMovieInput
@@ -14628,7 +14613,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageUncheckedCreateNestedManyWithoutMovieInput
     videos?: VideoUncheckedCreateNestedManyWithoutMovieInput
     seasons?: SeasonUncheckedCreateNestedManyWithoutMovieInput
@@ -14670,7 +14654,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUpdateManyWithoutMovieNestedInput
     videos?: VideoUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
@@ -14714,7 +14697,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUncheckedUpdateManyWithoutMovieNestedInput
     videos?: VideoUncheckedUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUncheckedUpdateManyWithoutMovieNestedInput
@@ -14757,7 +14739,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
   }
 
   export type MovieUpdateManyMutationInput = {
@@ -14791,7 +14772,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
   }
 
   export type MovieUncheckedUpdateManyInput = {
@@ -14825,7 +14805,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StringFilter = {
@@ -15877,7 +15856,6 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    movieId?: SortOrder
   }
 
   export type MovieAvgOrderByAggregateInput = {
@@ -15908,7 +15886,6 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    movieId?: SortOrder
   }
 
   export type MovieMinOrderByAggregateInput = {
@@ -15930,7 +15907,6 @@ export namespace Prisma {
     status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    movieId?: SortOrder
   }
 
   export type MovieSumOrderByAggregateInput = {
@@ -17348,7 +17324,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageCreateNestedManyWithoutMovieInput
     seasons?: SeasonCreateNestedManyWithoutMovieInput
     persons?: MovieOnPersonCreateNestedManyWithoutMovieInput
@@ -17392,7 +17367,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageUncheckedCreateNestedManyWithoutMovieInput
     seasons?: SeasonUncheckedCreateNestedManyWithoutMovieInput
     persons?: MovieOnPersonUncheckedCreateNestedManyWithoutMovieInput
@@ -17443,7 +17417,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
@@ -17486,7 +17459,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUncheckedUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUncheckedUpdateManyWithoutMovieNestedInput
     persons?: MovieOnPersonUncheckedUpdateManyWithoutMovieNestedInput
@@ -17527,7 +17499,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     videos?: VideoCreateNestedManyWithoutMovieInput
     seasons?: SeasonCreateNestedManyWithoutMovieInput
     persons?: MovieOnPersonCreateNestedManyWithoutMovieInput
@@ -17571,7 +17542,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     videos?: VideoUncheckedCreateNestedManyWithoutMovieInput
     seasons?: SeasonUncheckedCreateNestedManyWithoutMovieInput
     persons?: MovieOnPersonUncheckedCreateNestedManyWithoutMovieInput
@@ -17622,7 +17592,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     videos?: VideoUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
@@ -17665,7 +17634,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     videos?: VideoUncheckedUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUncheckedUpdateManyWithoutMovieNestedInput
     persons?: MovieOnPersonUncheckedUpdateManyWithoutMovieNestedInput
@@ -17706,7 +17674,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageCreateNestedManyWithoutMovieInput
     videos?: VideoCreateNestedManyWithoutMovieInput
     persons?: MovieOnPersonCreateNestedManyWithoutMovieInput
@@ -17750,7 +17717,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageUncheckedCreateNestedManyWithoutMovieInput
     videos?: VideoUncheckedCreateNestedManyWithoutMovieInput
     persons?: MovieOnPersonUncheckedCreateNestedManyWithoutMovieInput
@@ -17810,7 +17776,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUpdateManyWithoutMovieNestedInput
     videos?: VideoUpdateManyWithoutMovieNestedInput
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
@@ -17853,7 +17818,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUncheckedUpdateManyWithoutMovieNestedInput
     videos?: VideoUncheckedUpdateManyWithoutMovieNestedInput
     persons?: MovieOnPersonUncheckedUpdateManyWithoutMovieNestedInput
@@ -17894,7 +17858,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageCreateNestedManyWithoutMovieInput
     videos?: VideoCreateNestedManyWithoutMovieInput
     seasons?: SeasonCreateNestedManyWithoutMovieInput
@@ -17938,7 +17901,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageUncheckedCreateNestedManyWithoutMovieInput
     videos?: VideoUncheckedCreateNestedManyWithoutMovieInput
     seasons?: SeasonUncheckedCreateNestedManyWithoutMovieInput
@@ -17989,7 +17951,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUpdateManyWithoutMovieNestedInput
     videos?: VideoUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
@@ -18032,7 +17993,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUncheckedUpdateManyWithoutMovieNestedInput
     videos?: VideoUncheckedUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUncheckedUpdateManyWithoutMovieNestedInput
@@ -18197,7 +18157,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageCreateNestedManyWithoutMovieInput
     videos?: VideoCreateNestedManyWithoutMovieInput
     seasons?: SeasonCreateNestedManyWithoutMovieInput
@@ -18241,7 +18200,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageUncheckedCreateNestedManyWithoutMovieInput
     videos?: VideoUncheckedCreateNestedManyWithoutMovieInput
     seasons?: SeasonUncheckedCreateNestedManyWithoutMovieInput
@@ -18339,7 +18297,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUpdateManyWithoutMovieNestedInput
     videos?: VideoUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
@@ -18382,7 +18339,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUncheckedUpdateManyWithoutMovieNestedInput
     videos?: VideoUncheckedUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUncheckedUpdateManyWithoutMovieNestedInput
@@ -18560,7 +18516,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageCreateNestedManyWithoutMovieInput
     videos?: VideoCreateNestedManyWithoutMovieInput
     seasons?: SeasonCreateNestedManyWithoutMovieInput
@@ -18604,7 +18559,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageUncheckedCreateNestedManyWithoutMovieInput
     videos?: VideoUncheckedCreateNestedManyWithoutMovieInput
     seasons?: SeasonUncheckedCreateNestedManyWithoutMovieInput
@@ -18655,7 +18609,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUpdateManyWithoutMovieNestedInput
     videos?: VideoUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
@@ -18698,7 +18651,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUncheckedUpdateManyWithoutMovieNestedInput
     videos?: VideoUncheckedUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUncheckedUpdateManyWithoutMovieNestedInput
@@ -18942,7 +18894,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageCreateNestedManyWithoutMovieInput
     videos?: VideoCreateNestedManyWithoutMovieInput
     seasons?: SeasonCreateNestedManyWithoutMovieInput
@@ -18986,7 +18937,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageUncheckedCreateNestedManyWithoutMovieInput
     videos?: VideoUncheckedCreateNestedManyWithoutMovieInput
     seasons?: SeasonUncheckedCreateNestedManyWithoutMovieInput
@@ -19032,7 +18982,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageCreateNestedManyWithoutMovieInput
     videos?: VideoCreateNestedManyWithoutMovieInput
     seasons?: SeasonCreateNestedManyWithoutMovieInput
@@ -19075,7 +19024,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageUncheckedCreateNestedManyWithoutMovieInput
     videos?: VideoUncheckedCreateNestedManyWithoutMovieInput
     seasons?: SeasonUncheckedCreateNestedManyWithoutMovieInput
@@ -19126,7 +19074,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageCreateNestedManyWithoutMovieInput
     videos?: VideoCreateNestedManyWithoutMovieInput
     seasons?: SeasonCreateNestedManyWithoutMovieInput
@@ -19170,7 +19117,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageUncheckedCreateNestedManyWithoutMovieInput
     videos?: VideoUncheckedCreateNestedManyWithoutMovieInput
     seasons?: SeasonUncheckedCreateNestedManyWithoutMovieInput
@@ -19216,7 +19162,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageCreateNestedManyWithoutMovieInput
     videos?: VideoCreateNestedManyWithoutMovieInput
     seasons?: SeasonCreateNestedManyWithoutMovieInput
@@ -19259,7 +19204,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
     images?: ImageUncheckedCreateNestedManyWithoutMovieInput
     videos?: VideoUncheckedCreateNestedManyWithoutMovieInput
     seasons?: SeasonUncheckedCreateNestedManyWithoutMovieInput
@@ -19560,7 +19504,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUpdateManyWithoutMovieNestedInput
     videos?: VideoUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
@@ -19603,7 +19546,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUncheckedUpdateManyWithoutMovieNestedInput
     videos?: VideoUncheckedUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUncheckedUpdateManyWithoutMovieNestedInput
@@ -19652,7 +19594,6 @@ export namespace Prisma {
     status?: EnumMovieStatusNullableFilter | MovieStatus | null
     createdAt?: DateTimeFilter | Date | string
     updatedAt?: DateTimeFilter | Date | string
-    movieId?: StringFilter | string
   }
 
   export type MovieUpsertWithoutSimilarMoviesInput = {
@@ -19691,7 +19632,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUpdateManyWithoutMovieNestedInput
     videos?: VideoUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
@@ -19734,7 +19674,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUncheckedUpdateManyWithoutMovieNestedInput
     videos?: VideoUncheckedUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUncheckedUpdateManyWithoutMovieNestedInput
@@ -20013,7 +19952,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
   }
 
   export type MovieCreateManyMovieHavingSimilarInput = {
@@ -20047,7 +19985,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
-    movieId: string
   }
 
   export type MovieNameItemUpdateInput = {
@@ -20331,7 +20268,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUpdateManyWithoutMovieNestedInput
     videos?: VideoUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
@@ -20374,7 +20310,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUncheckedUpdateManyWithoutMovieNestedInput
     videos?: VideoUncheckedUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUncheckedUpdateManyWithoutMovieNestedInput
@@ -20416,7 +20351,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
   }
 
   export type MovieUpdateWithoutMovieHavingSimilarInput = {
@@ -20450,7 +20384,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUpdateManyWithoutMovieNestedInput
     videos?: VideoUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
@@ -20493,7 +20426,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
     images?: ImageUncheckedUpdateManyWithoutMovieNestedInput
     videos?: VideoUncheckedUpdateManyWithoutMovieNestedInput
     seasons?: SeasonUncheckedUpdateManyWithoutMovieNestedInput
@@ -20535,7 +20467,6 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListUpdateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    movieId?: StringFieldUpdateOperationsInput | string
   }
 
   export type NestedBoolFilter = {
