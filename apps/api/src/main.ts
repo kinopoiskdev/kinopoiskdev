@@ -2,6 +2,7 @@ import {
   ClassSerializerInterceptor,
   Logger,
   ValidationPipe,
+  VersioningType,
 } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestFactory, Reflector } from '@nestjs/core';
@@ -15,19 +16,16 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
 
+  // Set global version
+  app.enableVersioning({ defaultVersion: '1', type: VersioningType.URI });
   app.setGlobalPrefix(globalPrefix);
-
-  app.enableCors({
-    origin: '*',
-  });
-
+  app.enableCors({ origin: '*' });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
       transform: true,
     })
   );
-
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
   const config = new DocumentBuilder()
