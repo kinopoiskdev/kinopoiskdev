@@ -354,7 +354,7 @@ model Movie {
   // Id properties
   id                            String              @id @default(auto()) @map("_id") @db.ObjectId
   kpId                          Int                 @unique
-  externalId                    MovieExternalId
+  externalId                    MovieExternalId?
   // String properties
   name                          String?
   names                         String[]
@@ -379,7 +379,7 @@ model Movie {
   rating                        MovieRating
   budget                        MovieBudget?
   distributors                  MovieDistributors?
-  votes                         MovieVotes
+  votes                         MovieVotes?
   fees                          MovieFees?
   premiere                      MoviePremiere?
   technology                    MovieTechnology?
@@ -396,9 +396,9 @@ model Movie {
   facts                         MovieFact[]
   review                        Review[]
   // Sequels and prequels
-  movieHavingSequelsAndPrequels Movie               @relation("SequelsAndPrequels", fields: [id], references: [id], onUpdate: NoAction)
+  movieHavingSequelsAndPrequels Movie?               @relation("SequelsAndPrequels", fields: [id], references: [id], onUpdate: NoAction)
   sequelsAndPrequels            Movie[]             @relation("SequelsAndPrequels")
   // Similar movies
-  movieHavingSimilar            Movie               @relation("SimilarMovies", fields: [id], references: [id], onUpdate: NoAction)
+  movieHavingSimilar            Movie?               @relation("SimilarMovies", fields: [id], references: [id], onUpdate: NoAction)
   similarMovies                 Movie[]             @relation("SimilarMovies")
 }

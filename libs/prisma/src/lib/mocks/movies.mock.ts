@@ -1,6 +1,10 @@
-import { Movie, MovieStatus, MovieType } from '@prisma';
+import {
+  Movie,
+  MovieStatus,
+  MovieType,
+} from '../generated/prisma-client/index';
 
-export const movies: Partial<Movie>[] = [
+export const movies: Omit<Movie, 'id' | 'createdAt' | 'updatedAt'>[] = [
   {
     kpId: 435,
     fees: {
@@ -130,6 +134,9 @@ export const movies: Partial<Movie>[] = [
         },
       ],
     },
+    top10: null,
+    top250: null,
+    releaseYears: [],
   },
   {
     kpId: 666,
@@ -243,6 +250,11 @@ export const movies: Partial<Movie>[] = [
         },
       ],
     },
+    top10: null,
+    top250: null,
+    status: null,
+    distributors: null,
+    releaseYears: [],
   },
   {
     kpId: 464963,
@@ -377,5 +389,9 @@ export const movies: Partial<Movie>[] = [
         end: 2019,
       },
     ],
+    top10: null,
+    top250: null,
+    status: null,
+    distributors: null,
   },
 ];

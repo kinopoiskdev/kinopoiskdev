@@ -319,7 +319,7 @@ export type MovieFact = {
 export type Movie = {
   id: string
   kpId: number
-  externalId: MovieExternalId
+  externalId: MovieExternalId | null
   name: string | null
   names: string[]
   enName: string | null
@@ -340,7 +340,7 @@ export type Movie = {
   rating: MovieRating
   budget: MovieBudget | null
   distributors: MovieDistributors | null
-  votes: MovieVotes
+  votes: MovieVotes | null
   fees: MovieFees | null
   premiere: MoviePremiere | null
   technology: MovieTechnology | null
@@ -12094,22 +12094,22 @@ export namespace Prisma {
         P extends 'persons' ? Array < MovieOnPersonGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
         P extends 'facts' ? Array < MovieFactGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
         P extends 'review' ? Array < ReviewGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
-        P extends 'movieHavingSequelsAndPrequels' ? MovieGetPayload<Exclude<S['include'], undefined | null>[P]> :
+        P extends 'movieHavingSequelsAndPrequels' ? MovieGetPayload<Exclude<S['include'], undefined | null>[P]> | null :
         P extends 'sequelsAndPrequels' ? Array < MovieGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
-        P extends 'movieHavingSimilar' ? MovieGetPayload<Exclude<S['include'], undefined | null>[P]> :
+        P extends 'movieHavingSimilar' ? MovieGetPayload<Exclude<S['include'], undefined | null>[P]> | null :
         P extends 'similarMovies' ? Array < MovieGetPayload<Exclude<S['include'], undefined | null>[P]>>  :
         P extends '_count' ? MovieCountOutputTypeGetPayload<Exclude<S['include'], undefined | null>[P]> :  never
   } 
     : 'select' extends U
     ? {
     [P in TrueKeys<S['select']>]:
-        P extends 'externalId' ? MovieExternalIdGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'externalId' ? MovieExternalIdGetPayload<Exclude<S['select'], undefined | null>[P]> | null :
         P extends 'genres' ? Array < MovieNameItemGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
         P extends 'countries' ? Array < MovieNameItemGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
         P extends 'rating' ? MovieRatingGetPayload<Exclude<S['select'], undefined | null>[P]> :
         P extends 'budget' ? MovieBudgetGetPayload<Exclude<S['select'], undefined | null>[P]> | null :
         P extends 'distributors' ? MovieDistributorsGetPayload<Exclude<S['select'], undefined | null>[P]> | null :
-        P extends 'votes' ? MovieVotesGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'votes' ? MovieVotesGetPayload<Exclude<S['select'], undefined | null>[P]> | null :
         P extends 'fees' ? MovieFeesGetPayload<Exclude<S['select'], undefined | null>[P]> | null :
         P extends 'premiere' ? MoviePremiereGetPayload<Exclude<S['select'], undefined | null>[P]> | null :
         P extends 'technology' ? MovieTechnologyGetPayload<Exclude<S['select'], undefined | null>[P]> | null :
@@ -12121,9 +12121,9 @@ export namespace Prisma {
         P extends 'persons' ? Array < MovieOnPersonGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
         P extends 'facts' ? Array < MovieFactGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
         P extends 'review' ? Array < ReviewGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
-        P extends 'movieHavingSequelsAndPrequels' ? MovieGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'movieHavingSequelsAndPrequels' ? MovieGetPayload<Exclude<S['select'], undefined | null>[P]> | null :
         P extends 'sequelsAndPrequels' ? Array < MovieGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
-        P extends 'movieHavingSimilar' ? MovieGetPayload<Exclude<S['select'], undefined | null>[P]> :
+        P extends 'movieHavingSimilar' ? MovieGetPayload<Exclude<S['select'], undefined | null>[P]> | null :
         P extends 'similarMovies' ? Array < MovieGetPayload<Exclude<S['select'], undefined | null>[P]>>  :
         P extends '_count' ? MovieCountOutputTypeGetPayload<Exclude<S['select'], undefined | null>[P]> :  P extends keyof Movie ? Movie[P] : never
   } 
@@ -13700,7 +13700,7 @@ export namespace Prisma {
     NOT?: Enumerable<MovieWhereInput>
     id?: StringFilter | string
     kpId?: IntFilter | number
-    externalId?: XOR<MovieExternalIdCompositeFilter, MovieExternalIdObjectEqualityInput>
+    externalId?: XOR<MovieExternalIdNullableCompositeFilter, MovieExternalIdObjectEqualityInput> | null
     name?: StringNullableFilter | string | null
     names?: StringNullableListFilter
     enName?: StringNullableFilter | string | null
@@ -13721,7 +13721,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingCompositeFilter, MovieRatingObjectEqualityInput>
     budget?: XOR<MovieBudgetNullableCompositeFilter, MovieBudgetObjectEqualityInput> | null
     distributors?: XOR<MovieDistributorsNullableCompositeFilter, MovieDistributorsObjectEqualityInput> | null
-    votes?: XOR<MovieVotesCompositeFilter, MovieVotesObjectEqualityInput>
+    votes?: XOR<MovieVotesNullableCompositeFilter, MovieVotesObjectEqualityInput> | null
     fees?: XOR<MovieFeesNullableCompositeFilter, MovieFeesObjectEqualityInput> | null
     premiere?: XOR<MoviePremiereNullableCompositeFilter, MoviePremiereObjectEqualityInput> | null
     technology?: XOR<MovieTechnologyNullableCompositeFilter, MovieTechnologyObjectEqualityInput> | null
@@ -13735,9 +13735,9 @@ export namespace Prisma {
     persons?: MovieOnPersonListRelationFilter
     facts?: MovieFactListRelationFilter
     review?: ReviewListRelationFilter
-    movieHavingSequelsAndPrequels?: XOR<MovieRelationFilter, MovieWhereInput>
+    movieHavingSequelsAndPrequels?: XOR<MovieRelationFilter, MovieWhereInput> | null
     sequelsAndPrequels?: MovieListRelationFilter
-    movieHavingSimilar?: XOR<MovieRelationFilter, MovieWhereInput>
+    movieHavingSimilar?: XOR<MovieRelationFilter, MovieWhereInput> | null
     similarMovies?: MovieListRelationFilter
   }
 
@@ -14540,7 +14540,7 @@ export namespace Prisma {
 
   export type MovieCreateInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -14561,7 +14561,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -14584,7 +14584,7 @@ export namespace Prisma {
   export type MovieUncheckedCreateInput = {
     id?: string
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -14605,7 +14605,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -14625,7 +14625,7 @@ export namespace Prisma {
 
   export type MovieUpdateInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14646,7 +14646,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -14660,15 +14660,15 @@ export namespace Prisma {
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
     facts?: MovieFactUpdateManyWithoutMovieNestedInput
     review?: ReviewUpdateManyWithoutMovieNestedInput
-    movieHavingSequelsAndPrequels?: MovieUpdateOneRequiredWithoutSequelsAndPrequelsNestedInput
+    movieHavingSequelsAndPrequels?: MovieUpdateOneWithoutSequelsAndPrequelsNestedInput
     sequelsAndPrequels?: MovieUpdateManyWithoutMovieHavingSequelsAndPrequelsNestedInput
-    movieHavingSimilar?: MovieUpdateOneRequiredWithoutSimilarMoviesNestedInput
+    movieHavingSimilar?: MovieUpdateOneWithoutSimilarMoviesNestedInput
     similarMovies?: MovieUpdateManyWithoutMovieHavingSimilarNestedInput
   }
 
   export type MovieUncheckedUpdateInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14689,7 +14689,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -14710,7 +14710,7 @@ export namespace Prisma {
   export type MovieCreateManyInput = {
     id?: string
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -14731,7 +14731,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -14743,7 +14743,7 @@ export namespace Prisma {
 
   export type MovieUpdateManyMutationInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14764,7 +14764,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -14776,7 +14776,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14797,7 +14797,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -15547,10 +15547,11 @@ export namespace Prisma {
     isSet?: boolean
   }
 
-  export type MovieExternalIdCompositeFilter = {
-    equals?: MovieExternalIdObjectEqualityInput
-    is?: MovieExternalIdWhereInput
-    isNot?: MovieExternalIdWhereInput
+  export type MovieExternalIdNullableCompositeFilter = {
+    equals?: MovieExternalIdObjectEqualityInput | null
+    is?: MovieExternalIdWhereInput | null
+    isNot?: MovieExternalIdWhereInput | null
+    isSet?: boolean
   }
 
   export type MovieExternalIdObjectEqualityInput = {
@@ -15627,10 +15628,11 @@ export namespace Prisma {
     distributorRelease?: string | null
   }
 
-  export type MovieVotesCompositeFilter = {
-    equals?: MovieVotesObjectEqualityInput
-    is?: MovieVotesWhereInput
-    isNot?: MovieVotesWhereInput
+  export type MovieVotesNullableCompositeFilter = {
+    equals?: MovieVotesObjectEqualityInput | null
+    is?: MovieVotesWhereInput | null
+    isNot?: MovieVotesWhereInput | null
+    isSet?: boolean
   }
 
   export type MovieVotesObjectEqualityInput = {
@@ -16269,8 +16271,8 @@ export namespace Prisma {
     update?: XOR<MovieUpdateWithoutFactsInput, MovieUncheckedUpdateWithoutFactsInput>
   }
 
-  export type MovieExternalIdCreateEnvelopeInput = {
-    set?: MovieExternalIdCreateInput
+  export type MovieExternalIdNullableCreateEnvelopeInput = {
+    set?: MovieExternalIdCreateInput | null
   }
 
   export type MovieExternalIdCreateInput = {
@@ -16322,8 +16324,8 @@ export namespace Prisma {
     distributorRelease?: string | null
   }
 
-  export type MovieVotesCreateEnvelopeInput = {
-    set?: MovieVotesCreateInput
+  export type MovieVotesNullableCreateEnvelopeInput = {
+    set?: MovieVotesCreateInput | null
   }
 
   export type MovieVotesCreateInput = {
@@ -16509,9 +16511,10 @@ export namespace Prisma {
     connect?: Enumerable<MovieWhereUniqueInput>
   }
 
-  export type MovieExternalIdUpdateEnvelopeInput = {
-    set?: MovieExternalIdCreateInput
-    update?: MovieExternalIdUpdateInput
+  export type MovieExternalIdNullableUpdateEnvelopeInput = {
+    set?: MovieExternalIdCreateInput | null
+    upsert?: MovieExternalIdUpsertInput
+    unset?: boolean
   }
 
   export type MovieUpdatenamesInput = {
@@ -16553,9 +16556,10 @@ export namespace Prisma {
     unset?: boolean
   }
 
-  export type MovieVotesUpdateEnvelopeInput = {
-    set?: MovieVotesCreateInput
-    update?: MovieVotesUpdateInput
+  export type MovieVotesNullableUpdateEnvelopeInput = {
+    set?: MovieVotesCreateInput | null
+    upsert?: MovieVotesUpsertInput
+    unset?: boolean
   }
 
   export type MovieFeesNullableUpdateEnvelopeInput = {
@@ -16673,10 +16677,12 @@ export namespace Prisma {
     deleteMany?: Enumerable<ReviewScalarWhereInput>
   }
 
-  export type MovieUpdateOneRequiredWithoutSequelsAndPrequelsNestedInput = {
+  export type MovieUpdateOneWithoutSequelsAndPrequelsNestedInput = {
     create?: XOR<MovieCreateWithoutSequelsAndPrequelsInput, MovieUncheckedCreateWithoutSequelsAndPrequelsInput>
     connectOrCreate?: MovieCreateOrConnectWithoutSequelsAndPrequelsInput
     upsert?: MovieUpsertWithoutSequelsAndPrequelsInput
+    disconnect?: boolean
+    delete?: boolean
     connect?: MovieWhereUniqueInput
     update?: XOR<MovieUpdateWithoutSequelsAndPrequelsInput, MovieUncheckedUpdateWithoutSequelsAndPrequelsInput>
   }
@@ -16695,10 +16701,12 @@ export namespace Prisma {
     deleteMany?: Enumerable<MovieScalarWhereInput>
   }
 
-  export type MovieUpdateOneRequiredWithoutSimilarMoviesNestedInput = {
+  export type MovieUpdateOneWithoutSimilarMoviesNestedInput = {
     create?: XOR<MovieCreateWithoutSimilarMoviesInput, MovieUncheckedCreateWithoutSimilarMoviesInput>
     connectOrCreate?: MovieCreateOrConnectWithoutSimilarMoviesInput
     upsert?: MovieUpsertWithoutSimilarMoviesInput
+    disconnect?: boolean
+    delete?: boolean
     connect?: MovieWhereUniqueInput
     update?: XOR<MovieUpdateWithoutSimilarMoviesInput, MovieUncheckedUpdateWithoutSimilarMoviesInput>
   }
@@ -17295,7 +17303,7 @@ export namespace Prisma {
 
   export type MovieCreateWithoutVideosInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -17316,7 +17324,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17338,7 +17346,7 @@ export namespace Prisma {
   export type MovieUncheckedCreateWithoutVideosInput = {
     id?: string
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -17359,7 +17367,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17388,7 +17396,7 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutVideosInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17409,7 +17417,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17422,15 +17430,15 @@ export namespace Prisma {
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
     facts?: MovieFactUpdateManyWithoutMovieNestedInput
     review?: ReviewUpdateManyWithoutMovieNestedInput
-    movieHavingSequelsAndPrequels?: MovieUpdateOneRequiredWithoutSequelsAndPrequelsNestedInput
+    movieHavingSequelsAndPrequels?: MovieUpdateOneWithoutSequelsAndPrequelsNestedInput
     sequelsAndPrequels?: MovieUpdateManyWithoutMovieHavingSequelsAndPrequelsNestedInput
-    movieHavingSimilar?: MovieUpdateOneRequiredWithoutSimilarMoviesNestedInput
+    movieHavingSimilar?: MovieUpdateOneWithoutSimilarMoviesNestedInput
     similarMovies?: MovieUpdateManyWithoutMovieHavingSimilarNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutVideosInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17451,7 +17459,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17470,7 +17478,7 @@ export namespace Prisma {
 
   export type MovieCreateWithoutImagesInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -17491,7 +17499,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17513,7 +17521,7 @@ export namespace Prisma {
   export type MovieUncheckedCreateWithoutImagesInput = {
     id?: string
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -17534,7 +17542,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17563,7 +17571,7 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutImagesInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17584,7 +17592,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17597,15 +17605,15 @@ export namespace Prisma {
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
     facts?: MovieFactUpdateManyWithoutMovieNestedInput
     review?: ReviewUpdateManyWithoutMovieNestedInput
-    movieHavingSequelsAndPrequels?: MovieUpdateOneRequiredWithoutSequelsAndPrequelsNestedInput
+    movieHavingSequelsAndPrequels?: MovieUpdateOneWithoutSequelsAndPrequelsNestedInput
     sequelsAndPrequels?: MovieUpdateManyWithoutMovieHavingSequelsAndPrequelsNestedInput
-    movieHavingSimilar?: MovieUpdateOneRequiredWithoutSimilarMoviesNestedInput
+    movieHavingSimilar?: MovieUpdateOneWithoutSimilarMoviesNestedInput
     similarMovies?: MovieUpdateManyWithoutMovieHavingSimilarNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutImagesInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17626,7 +17634,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17645,7 +17653,7 @@ export namespace Prisma {
 
   export type MovieCreateWithoutSeasonsInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -17666,7 +17674,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17688,7 +17696,7 @@ export namespace Prisma {
   export type MovieUncheckedCreateWithoutSeasonsInput = {
     id?: string
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -17709,7 +17717,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17747,7 +17755,7 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutSeasonsInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17768,7 +17776,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17781,15 +17789,15 @@ export namespace Prisma {
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
     facts?: MovieFactUpdateManyWithoutMovieNestedInput
     review?: ReviewUpdateManyWithoutMovieNestedInput
-    movieHavingSequelsAndPrequels?: MovieUpdateOneRequiredWithoutSequelsAndPrequelsNestedInput
+    movieHavingSequelsAndPrequels?: MovieUpdateOneWithoutSequelsAndPrequelsNestedInput
     sequelsAndPrequels?: MovieUpdateManyWithoutMovieHavingSequelsAndPrequelsNestedInput
-    movieHavingSimilar?: MovieUpdateOneRequiredWithoutSimilarMoviesNestedInput
+    movieHavingSimilar?: MovieUpdateOneWithoutSimilarMoviesNestedInput
     similarMovies?: MovieUpdateManyWithoutMovieHavingSimilarNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutSeasonsInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17810,7 +17818,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17829,7 +17837,7 @@ export namespace Prisma {
 
   export type MovieCreateWithoutReviewInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -17850,7 +17858,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17872,7 +17880,7 @@ export namespace Prisma {
   export type MovieUncheckedCreateWithoutReviewInput = {
     id?: string
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -17893,7 +17901,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17922,7 +17930,7 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutReviewInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17943,7 +17951,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -17956,15 +17964,15 @@ export namespace Prisma {
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
     facts?: MovieFactUpdateManyWithoutMovieNestedInput
-    movieHavingSequelsAndPrequels?: MovieUpdateOneRequiredWithoutSequelsAndPrequelsNestedInput
+    movieHavingSequelsAndPrequels?: MovieUpdateOneWithoutSequelsAndPrequelsNestedInput
     sequelsAndPrequels?: MovieUpdateManyWithoutMovieHavingSequelsAndPrequelsNestedInput
-    movieHavingSimilar?: MovieUpdateOneRequiredWithoutSimilarMoviesNestedInput
+    movieHavingSimilar?: MovieUpdateOneWithoutSimilarMoviesNestedInput
     similarMovies?: MovieUpdateManyWithoutMovieHavingSimilarNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutReviewInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17985,7 +17993,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18128,7 +18136,7 @@ export namespace Prisma {
 
   export type MovieCreateWithoutPersonsInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -18149,7 +18157,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18171,7 +18179,7 @@ export namespace Prisma {
   export type MovieUncheckedCreateWithoutPersonsInput = {
     id?: string
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -18192,7 +18200,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18268,7 +18276,7 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutPersonsInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18289,7 +18297,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18302,15 +18310,15 @@ export namespace Prisma {
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
     facts?: MovieFactUpdateManyWithoutMovieNestedInput
     review?: ReviewUpdateManyWithoutMovieNestedInput
-    movieHavingSequelsAndPrequels?: MovieUpdateOneRequiredWithoutSequelsAndPrequelsNestedInput
+    movieHavingSequelsAndPrequels?: MovieUpdateOneWithoutSequelsAndPrequelsNestedInput
     sequelsAndPrequels?: MovieUpdateManyWithoutMovieHavingSequelsAndPrequelsNestedInput
-    movieHavingSimilar?: MovieUpdateOneRequiredWithoutSimilarMoviesNestedInput
+    movieHavingSimilar?: MovieUpdateOneWithoutSimilarMoviesNestedInput
     similarMovies?: MovieUpdateManyWithoutMovieHavingSimilarNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutPersonsInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18331,7 +18339,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18487,7 +18495,7 @@ export namespace Prisma {
 
   export type MovieCreateWithoutFactsInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -18508,7 +18516,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18530,7 +18538,7 @@ export namespace Prisma {
   export type MovieUncheckedCreateWithoutFactsInput = {
     id?: string
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -18551,7 +18559,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18580,7 +18588,7 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutFactsInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18601,7 +18609,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18614,15 +18622,15 @@ export namespace Prisma {
     seasons?: SeasonUpdateManyWithoutMovieNestedInput
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
     review?: ReviewUpdateManyWithoutMovieNestedInput
-    movieHavingSequelsAndPrequels?: MovieUpdateOneRequiredWithoutSequelsAndPrequelsNestedInput
+    movieHavingSequelsAndPrequels?: MovieUpdateOneWithoutSequelsAndPrequelsNestedInput
     sequelsAndPrequels?: MovieUpdateManyWithoutMovieHavingSequelsAndPrequelsNestedInput
-    movieHavingSimilar?: MovieUpdateOneRequiredWithoutSimilarMoviesNestedInput
+    movieHavingSimilar?: MovieUpdateOneWithoutSimilarMoviesNestedInput
     similarMovies?: MovieUpdateManyWithoutMovieHavingSimilarNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutFactsInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18643,7 +18651,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18865,7 +18873,7 @@ export namespace Prisma {
 
   export type MovieCreateWithoutSequelsAndPrequelsInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -18886,7 +18894,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18908,7 +18916,7 @@ export namespace Prisma {
   export type MovieUncheckedCreateWithoutSequelsAndPrequelsInput = {
     id?: string
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -18929,7 +18937,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18953,7 +18961,7 @@ export namespace Prisma {
 
   export type MovieCreateWithoutMovieHavingSequelsAndPrequelsInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -18974,7 +18982,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -18995,7 +19003,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutMovieHavingSequelsAndPrequelsInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -19016,7 +19024,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -19045,7 +19053,7 @@ export namespace Prisma {
 
   export type MovieCreateWithoutSimilarMoviesInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -19066,7 +19074,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -19088,7 +19096,7 @@ export namespace Prisma {
   export type MovieUncheckedCreateWithoutSimilarMoviesInput = {
     id?: string
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -19109,7 +19117,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -19133,7 +19141,7 @@ export namespace Prisma {
 
   export type MovieCreateWithoutMovieHavingSimilarInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -19154,7 +19162,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -19175,7 +19183,7 @@ export namespace Prisma {
 
   export type MovieUncheckedCreateWithoutMovieHavingSimilarInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -19196,7 +19204,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -19223,10 +19231,9 @@ export namespace Prisma {
     data: Enumerable<MovieCreateManyMovieHavingSimilarInput>
   }
 
-  export type MovieExternalIdUpdateInput = {
-    imdb?: NullableStringFieldUpdateOperationsInput | string | null
-    tmdb?: NullableIntFieldUpdateOperationsInput | number | null
-    kpHD?: NullableStringFieldUpdateOperationsInput | string | null
+  export type MovieExternalIdUpsertInput = {
+    set: MovieExternalIdCreateInput | null
+    update: MovieExternalIdUpdateInput
   }
 
   export type MovieNameItemUpdateManyInput = {
@@ -19257,13 +19264,9 @@ export namespace Prisma {
     update: MovieDistributorsUpdateInput
   }
 
-  export type MovieVotesUpdateInput = {
-    await?: NullableIntFieldUpdateOperationsInput | number | null
-    filmCritics?: NullableIntFieldUpdateOperationsInput | number | null
-    imdb?: IntFieldUpdateOperationsInput | number
-    kp?: IntFieldUpdateOperationsInput | number
-    russianFilmCritics?: NullableIntFieldUpdateOperationsInput | number | null
-    tmdb?: NullableIntFieldUpdateOperationsInput | number | null
+  export type MovieVotesUpsertInput = {
+    set: MovieVotesCreateInput | null
+    update: MovieVotesUpdateInput
   }
 
   export type MovieFeesUpsertInput = {
@@ -19475,7 +19478,7 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutSequelsAndPrequelsInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19496,7 +19499,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -19510,14 +19513,14 @@ export namespace Prisma {
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
     facts?: MovieFactUpdateManyWithoutMovieNestedInput
     review?: ReviewUpdateManyWithoutMovieNestedInput
-    movieHavingSequelsAndPrequels?: MovieUpdateOneRequiredWithoutSequelsAndPrequelsNestedInput
-    movieHavingSimilar?: MovieUpdateOneRequiredWithoutSimilarMoviesNestedInput
+    movieHavingSequelsAndPrequels?: MovieUpdateOneWithoutSequelsAndPrequelsNestedInput
+    movieHavingSimilar?: MovieUpdateOneWithoutSimilarMoviesNestedInput
     similarMovies?: MovieUpdateManyWithoutMovieHavingSimilarNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutSequelsAndPrequelsInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19538,7 +19541,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -19603,7 +19606,7 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutSimilarMoviesInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19624,7 +19627,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -19638,14 +19641,14 @@ export namespace Prisma {
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
     facts?: MovieFactUpdateManyWithoutMovieNestedInput
     review?: ReviewUpdateManyWithoutMovieNestedInput
-    movieHavingSequelsAndPrequels?: MovieUpdateOneRequiredWithoutSequelsAndPrequelsNestedInput
+    movieHavingSequelsAndPrequels?: MovieUpdateOneWithoutSequelsAndPrequelsNestedInput
     sequelsAndPrequels?: MovieUpdateManyWithoutMovieHavingSequelsAndPrequelsNestedInput
-    movieHavingSimilar?: MovieUpdateOneRequiredWithoutSimilarMoviesNestedInput
+    movieHavingSimilar?: MovieUpdateOneWithoutSimilarMoviesNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutSimilarMoviesInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19666,7 +19669,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -19923,7 +19926,7 @@ export namespace Prisma {
 
   export type MovieCreateManyMovieHavingSequelsAndPrequelsInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -19944,7 +19947,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -19956,7 +19959,7 @@ export namespace Prisma {
 
   export type MovieCreateManyMovieHavingSimilarInput = {
     kpId: number
-    externalId: XOR<MovieExternalIdCreateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableCreateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: string | null
     names?: MovieCreatenamesInput | Enumerable<string>
     enName?: string | null
@@ -19977,7 +19980,7 @@ export namespace Prisma {
     rating: XOR<MovieRatingCreateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableCreateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableCreateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes: XOR<MovieVotesCreateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableCreateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableCreateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableCreateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableCreateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -19985,6 +19988,12 @@ export namespace Prisma {
     releaseYears?: XOR<MovieReleaseYearsListCreateEnvelopeInput, Enumerable<MovieReleaseYearsCreateInput>>
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type MovieExternalIdUpdateInput = {
+    imdb?: NullableStringFieldUpdateOperationsInput | string | null
+    tmdb?: NullableIntFieldUpdateOperationsInput | number | null
+    kpHD?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MovieNameItemUpdateInput = {
@@ -20016,6 +20025,15 @@ export namespace Prisma {
   export type MovieDistributorsUpdateInput = {
     distributor?: NullableStringFieldUpdateOperationsInput | string | null
     distributorRelease?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type MovieVotesUpdateInput = {
+    await?: NullableIntFieldUpdateOperationsInput | number | null
+    filmCritics?: NullableIntFieldUpdateOperationsInput | number | null
+    imdb?: IntFieldUpdateOperationsInput | number
+    kp?: IntFieldUpdateOperationsInput | number
+    russianFilmCritics?: NullableIntFieldUpdateOperationsInput | number | null
+    tmdb?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type MovieFeesUpdateInput = {
@@ -20239,7 +20257,7 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutMovieHavingSequelsAndPrequelsInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20260,7 +20278,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -20275,13 +20293,13 @@ export namespace Prisma {
     facts?: MovieFactUpdateManyWithoutMovieNestedInput
     review?: ReviewUpdateManyWithoutMovieNestedInput
     sequelsAndPrequels?: MovieUpdateManyWithoutMovieHavingSequelsAndPrequelsNestedInput
-    movieHavingSimilar?: MovieUpdateOneRequiredWithoutSimilarMoviesNestedInput
+    movieHavingSimilar?: MovieUpdateOneWithoutSimilarMoviesNestedInput
     similarMovies?: MovieUpdateManyWithoutMovieHavingSimilarNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutMovieHavingSequelsAndPrequelsInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20302,7 +20320,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -20322,7 +20340,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutSequelsAndPrequelsInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20343,7 +20361,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -20355,7 +20373,7 @@ export namespace Prisma {
 
   export type MovieUpdateWithoutMovieHavingSimilarInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20376,7 +20394,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -20390,14 +20408,14 @@ export namespace Prisma {
     persons?: MovieOnPersonUpdateManyWithoutMovieNestedInput
     facts?: MovieFactUpdateManyWithoutMovieNestedInput
     review?: ReviewUpdateManyWithoutMovieNestedInput
-    movieHavingSequelsAndPrequels?: MovieUpdateOneRequiredWithoutSequelsAndPrequelsNestedInput
+    movieHavingSequelsAndPrequels?: MovieUpdateOneWithoutSequelsAndPrequelsNestedInput
     sequelsAndPrequels?: MovieUpdateManyWithoutMovieHavingSequelsAndPrequelsNestedInput
     similarMovies?: MovieUpdateManyWithoutMovieHavingSimilarNestedInput
   }
 
   export type MovieUncheckedUpdateWithoutMovieHavingSimilarInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20418,7 +20436,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
@@ -20438,7 +20456,7 @@ export namespace Prisma {
 
   export type MovieUncheckedUpdateManyWithoutSimilarMoviesInput = {
     kpId?: IntFieldUpdateOperationsInput | number
-    externalId?: XOR<MovieExternalIdUpdateEnvelopeInput, MovieExternalIdCreateInput>
+    externalId?: XOR<MovieExternalIdNullableUpdateEnvelopeInput, MovieExternalIdCreateInput> | null
     name?: NullableStringFieldUpdateOperationsInput | string | null
     names?: MovieUpdatenamesInput | Enumerable<string>
     enName?: NullableStringFieldUpdateOperationsInput | string | null
@@ -20459,7 +20477,7 @@ export namespace Prisma {
     rating?: XOR<MovieRatingUpdateEnvelopeInput, MovieRatingCreateInput>
     budget?: XOR<MovieBudgetNullableUpdateEnvelopeInput, MovieBudgetCreateInput> | null
     distributors?: XOR<MovieDistributorsNullableUpdateEnvelopeInput, MovieDistributorsCreateInput> | null
-    votes?: XOR<MovieVotesUpdateEnvelopeInput, MovieVotesCreateInput>
+    votes?: XOR<MovieVotesNullableUpdateEnvelopeInput, MovieVotesCreateInput> | null
     fees?: XOR<MovieFeesNullableUpdateEnvelopeInput, MovieFeesCreateInput> | null
     premiere?: XOR<MoviePremiereNullableUpdateEnvelopeInput, MoviePremiereCreateInput> | null
     technology?: XOR<MovieTechnologyNullableUpdateEnvelopeInput, MovieTechnologyCreateInput> | null
