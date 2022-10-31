@@ -9,7 +9,8 @@
     "db:gen": "prisma generate --schema ./libs/prisma/schema.prisma",
     "db:pull": "prisma db pull --schema ./libs/prisma/schema.prisma",
     "db:push": "prisma db push --schema ./libs/prisma/schema.prisma",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "postinstall": "npm run db:gen"
   },
   "prisma": {
     "seed": "ts-node ./libs/prisma/src/lib/seed.ts"
