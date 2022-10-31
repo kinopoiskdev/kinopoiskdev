@@ -29,6 +29,55 @@
 Документация велась вручную [kinopoiskdev.docs.apiary.io](https://kinopoiskdev.docs.apiary.io/), до ее автогенерации мои руки так и не добрались. 
 За все время она сильно устарела. А apiary.io вообще заблокировал Россиян.
 
+### Производительность
+Для большинства пользователей api работало быстро и стабильно, но достигалось это за счет кеширования на уровне реверспрокси. Это приводило к проблемам из-за отсутствия инвалидации кеша. Если бы кеш был внутри апи, то он был бы более эффективным.
+Так как в качестве http фреймворка был выбран express, он конечно же порезал потенциальную перформанс до уровня питона.
+
+Сравнение производительности в бенчмарках:
+Текущая реализация, с 40 ядрами и 60gb RAM и кешем. Но в этом тесте сильно порезал запросы cloudflare.
+```shell
+$ wrk -t10 -c400 -d30s  https://api.kinopoisk.dev/movie\?token\=\&search\=427631\&field\=id
+Running 30s test @ https://api.kinopoisk.dev/movie?token=&search=427631&field=id
+  10 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency   158.26ms   93.65ms   1.26s    89.85%
+    Req/Sec   104.39     82.41   560.00     90.79%
+  30350 requests in 30.06s, 168.53MB read
+  Socket errors: connect 6, read 2, write 0, timeout 0
+  Non-2xx or 3xx responses: 22206
+Requests/sec:   1009.71
+Transfer/sec:      5.61MB
+```
+
+Чтож, запущу локально эту же версии без кластерного режима
+```shell
+$ wrk -t10 -c400 -d30s  http://localhost:3000/movie\?token\=\&search\=427631\&field\=id
+Running 30s test @ http://localhost:3000/movie?token=&search=427631&field=id
+  10 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     0.00us    0.00us   0.00us     nan%
+    Req/Sec    16.95     12.73    60.00     61.38%
+  800 requests in 30.03s, 5.31MB read
+  Socket errors: connect 0, read 409, write 0, timeout 800
+Requests/sec:     26.64
+Transfer/sec:    181.12KB
+```
+
+А теперь запущу аналогично новую версию из этого репозитория, которая использует fastify 
+```shell
+$ wrk -t10 -c400 -d30s  http://localhost:3333/v1/movie/666   
+Running 30s test @ http://localhost:3333/v1/movie/666
+  10 threads and 400 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    65.36ms  191.19ms   1.99s    95.14%
+    Req/Sec     1.31k   345.95     6.25k    85.50%
+  385723 requests in 30.05s, 1.14GB read
+  Socket errors: connect 0, read 812, write 0, timeout 444
+Requests/sec:  12834.22
+Transfer/sec:     38.78MB
+```
+Результаты уже приятные :)
+
 ---
 **[Текущая схема базы данных](https://raw.githubusercontent.com/kinopoiskdev/kinopoiskdev/main/docs/images/ERD.svg)**
 <p style="text-align: center;"><img src="./docs/images/ERD.svg"></p>
