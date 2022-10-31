@@ -1,17 +1,25 @@
-import {ClassSerializerInterceptor, Logger, ValidationPipe, VersioningType,} from '@nestjs/common';
-import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger';
-import {NestFactory, Reflector} from '@nestjs/core';
+import {
+  ClassSerializerInterceptor,
+  Logger,
+  ValidationPipe,
+  VersioningType,
+} from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { NestFactory, Reflector } from '@nestjs/core';
 
-import {AppModule} from './app/app.module';
-import {FastifyAdapter, NestFastifyApplication} from "@nestjs/platform-fastify";
+import { AppModule } from './app/app.module';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 
 async function bootstrap() {
-  const logger = new Logger('API: Main');
+  const logger = new Logger('Main');
   const docGlobalPrefix = 'documentation';
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(),
+    new FastifyAdapter()
   );
 
   // Set global version
@@ -37,9 +45,7 @@ async function bootstrap() {
 
   const port = process.env.PORT || 3333;
   await app.listen(port);
-  logger.log(
-    `🚀 API app is running on: http://localhost:${port}/`
-  );
+  logger.log(`🚀 API app is running on: http://localhost:${port}/`);
   logger.log(
     `📑 API Documentation is running on: http://localhost:${port}/${docGlobalPrefix}`
   );
