@@ -37,7 +37,6 @@ async function bootstrap() {
 
   // Set global version
   app.enableVersioning({ defaultVersion: '1', type: VersioningType.URI });
-
   app.enableCors({ origin: '*' });
   app.useGlobalPipes(
     new ValidationPipe({
@@ -58,8 +57,10 @@ async function bootstrap() {
   SwaggerModule.setup(docGlobalPrefix, app, document);
 
   const port = process.env.PORT || 3333;
+  const appEnv = process.env.APP_ENV;
   await app.listen(port);
   logger.log(`🚀 API app is running on: http://localhost:${port}/`);
+  logger.log(`🌚 ENV: ${appEnv}`);
   logger.log(
     `📑 API Documentation is running on: http://localhost:${port}/${docGlobalPrefix}`
   );
