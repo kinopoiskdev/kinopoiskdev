@@ -20,7 +20,9 @@ async function bootstrap() {
   // Init logger
   const logger = new Logger('Main');
   // Init fastify adapter
-  const adapter = new FastifyAdapter();
+  const adapter = new FastifyAdapter({
+    trustProxy: true,
+  });
 
   // Set global helmet
   adapter.register(fastifyHelmet, { global: true });
@@ -32,7 +34,8 @@ async function bootstrap() {
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    adapter
+    adapter,
+    { bufferLogs: true }
   );
 
   // Set global version
