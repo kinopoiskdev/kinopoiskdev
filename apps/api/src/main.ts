@@ -12,10 +12,14 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
+import fastifyHelmet from '@fastify/helmet';
 
 async function bootstrap() {
   const logger = new Logger('Main');
   const docGlobalPrefix = 'documentation';
+
+  const adapter = new FastifyAdapter();
+  adapter.register(fastifyHelmet, { global: true });
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
