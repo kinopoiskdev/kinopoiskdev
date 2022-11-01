@@ -6,28 +6,38 @@ import {
 } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { NestFactory, Reflector } from '@nestjs/core';
-
 import { AppModule } from './app/app.module';
 import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import fastifyHelmet from '@fastify/helmet';
+import compression from '@fastify/compress';
 
 async function bootstrap() {
-  const logger = new Logger('Main');
   const docGlobalPrefix = 'documentation';
 
+  // Init logger
+  const logger = new Logger('Main');
+  // Init fastify adapter
   const adapter = new FastifyAdapter();
+
+  // Set global helmet
   adapter.register(fastifyHelmet, { global: true });
+  // Set global gzip compression
+  adapter.register(compression, {
+    global: true,
+    encodings: ['gzip', 'deflate'],
+  });
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter()
+    adapter
   );
 
   // Set global version
   app.enableVersioning({ defaultVersion: '1', type: VersioningType.URI });
+
   app.enableCors({ origin: '*' });
   app.useGlobalPipes(
     new ValidationPipe({
