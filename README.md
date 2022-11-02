@@ -36,6 +36,7 @@
 <details>
 <summary>Сравнение производительности в бенчмарках</summary>
 Текущая реализация, с 40 ядрами и 60gb RAM и кешем. Но в этом тесте сильно порезал запросы cloudflare.
+
 ```shell
 $ wrk -t10 -c400 -d30s  https://api.kinopoisk.dev/movie\?token\=\&search\=427631\&field\=id
 Running 30s test @ https://api.kinopoisk.dev/movie?token=&search=427631&field=id
@@ -72,7 +73,7 @@ Running 30s test @ http://localhost:3333/v1/movie/666
   Thread Stats   Avg      Stdev     Max   +/- Stdev
     Latency    65.36ms  191.19ms   1.99s    95.14%
     Req/Sec     1.31k   345.95     6.25k    85.50%
-  385723 requests in 30.05s, 1.14GB read
+  385723 requests in 30.05s, 1.14GB readrm
   Socket errors: connect 0, read 812, write 0, timeout 444
 Requests/sec:  12834.22
 Transfer/sec:     38.78MB
