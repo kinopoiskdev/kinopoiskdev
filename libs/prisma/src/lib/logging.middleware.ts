@@ -61,7 +61,7 @@ export function loggingMiddleware(
       );
     } else {
       logger[logLevel](
-        `Prisma Query ${params.model}.${params.action} took ${executionTime}ms`
+        `Query ${params.model}.${params.action} took ${executionTime}ms`
       );
     }
 
