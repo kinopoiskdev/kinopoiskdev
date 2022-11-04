@@ -5,7 +5,7 @@ import {
   VersioningType,
 } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { NestFactory, Reflector } from '@nestjs/core';
+import { HttpAdapterHost, NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import {
   FastifyAdapter,
@@ -13,6 +13,7 @@ import {
 } from '@nestjs/platform-fastify';
 import fastifyHelmet from '@fastify/helmet';
 import compression from '@fastify/compress';
+import { PrismaClientExceptionFilter, PrismaService } from '@prisma';
 
 async function bootstrap() {
   const docGlobalPrefix = 'documentation';
@@ -48,6 +49,14 @@ async function bootstrap() {
     })
   );
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+
+  // enable shutdown hook
+  const prismaService: PrismaService = app.get(PrismaService);
+  await prismaService.enableShutdownHooks(app);
+
+  // prisma exception filter
+  const { httpAdapter } = app.get(HttpAdapterHost);
+  app.useGlobalFilters(new PrismaClientExceptionFilter(httpAdapter));
 
   const config = new DocumentBuilder()
     .setTitle('API documentation')
