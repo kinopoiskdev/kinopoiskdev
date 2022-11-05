@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@common/pipes": ["libs/common/pipes/src/index.ts"],
       "@prisma": ["libs/prisma/src/index.ts"]
     }
   },

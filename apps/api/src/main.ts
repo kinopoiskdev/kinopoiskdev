@@ -44,7 +44,6 @@ async function bootstrap() {
   app.enableCors({ origin: '*' });
   app.useGlobalPipes(
     new ValidationPipe({
-      whitelist: true,
       transform: true,
     })
   );
