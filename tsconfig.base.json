@@ -18,6 +18,9 @@
       "@common/dto": ["libs/common/dto/src/index.ts"],
       "@common/pipes": ["libs/common/pipes/src/index.ts"],
       "@common/utils": ["libs/common/utils/src/index.ts"],
+      "@common/decorators": [
+        "libs/common/decorators/src/index.ts"
+      ],
       "@prisma": ["libs/prisma/src/index.ts"]
     }
   },
