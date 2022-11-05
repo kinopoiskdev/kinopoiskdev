@@ -68,18 +68,13 @@ const getQueryDecorators = (fn: Function) => {
       description: 'Поля для выборки',
       isArray: true,
       enum: field,
-      schema: {
-        type: 'array',
-      },
     }),
     ApiQuery({
       name: 'search',
       required: false,
       description: 'Значения полей',
+      isArray: true,
       type: 'string',
-      schema: {
-        type: 'array',
-      },
     }),
   ];
 };

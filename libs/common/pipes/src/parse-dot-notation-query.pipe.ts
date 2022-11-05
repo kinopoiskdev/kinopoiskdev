@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types*/
 import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { RemoveArrayBrackets } from '@common/utils';
+import { RemoveArrayBrackets, ToArray } from '@common/utils';
 
 type Filters = {
   field?: string[];
@@ -31,8 +31,11 @@ export class ParseDotNotationQuery<I = Filters>
     query = RemoveArrayBrackets(query);
     const { field, search, sortField, sortType, ...params } = query;
 
-    const queryObj = this.parseDotNotationObj(field, search);
-    const sortObj = this.parseDotNotationObj(sortField, sortType);
+    const queryObj = this.parseDotNotationObj(ToArray(field), ToArray(search));
+    const sortObj = this.parseDotNotationObj(
+      ToArray(sortField),
+      ToArray(sortType)
+    );
     return { query: queryObj, sort: sortObj, ...params };
   }
 
