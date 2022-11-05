@@ -1,1 +1,1 @@
-export * from './lib/common-dto';
+export * from './query/paginated.query.dto';
