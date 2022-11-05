@@ -1,1 +1,2 @@
-export * from './lib/common-decorators';
+export * from './api-nested-query.decorator';
+export * from './api-dot-natation-query.decorator';
