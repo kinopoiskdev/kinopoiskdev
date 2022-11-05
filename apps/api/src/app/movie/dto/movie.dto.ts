@@ -4,15 +4,22 @@ import {
   MovieDistributors,
   MovieExternalId,
   MovieFees,
-  MovieFeesItem, MovieLogo, MovieNameItem,
+  MovieFeesItem,
+  MovieLogo,
+  MovieNameItem,
   MoviePremiere,
-  MovieRating, MovieReleaseYears,
+  MovieRating,
+  MovieReleaseYears,
   MovieStatus,
   MovieTechnology,
   MovieType,
-  MovieVotes, MovieWatchability, MovieWatchabilityItems,
+  MovieVotes,
+  MovieWatchability,
+  MovieWatchabilityItems,
 } from '@prisma';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsOptional } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class MovieBudgetDto implements MovieBudget {
   @ApiProperty({ required: false })
@@ -49,25 +56,25 @@ export class MovieFeesItemDto implements MovieFeesItem {
   value: number;
 }
 
-export class MovieNameItemDto implements MovieNameItem  {
+export class MovieNameItemDto implements MovieNameItem {
   @ApiProperty({ required: false })
   name: string;
 }
 
-export class MovieReleaseYearsDto implements MovieReleaseYears  {
+export class MovieReleaseYearsDto implements MovieReleaseYears {
   @ApiProperty({})
   start: number;
   @ApiProperty({ required: false })
   end: number | null;
 }
 
-export class MovieLogoDto implements MovieLogo  {
+export class MovieLogoDto implements MovieLogo {
   @ApiProperty({ required: false })
   url: string | null;
 }
 
-export class MovieWatchabilityItemsDto implements MovieWatchabilityItems  {
-  @ApiProperty({type: MovieLogoDto })
+export class MovieWatchabilityItemsDto implements MovieWatchabilityItems {
+  @ApiProperty({ type: MovieLogoDto })
   logo: MovieLogoDto;
 
   @ApiProperty()
@@ -77,8 +84,8 @@ export class MovieWatchabilityItemsDto implements MovieWatchabilityItems  {
   url: string;
 }
 
-export class MovieWatchabilityDto implements MovieWatchability  {
-  @ApiProperty({type: MovieWatchabilityItemsDto})
+export class MovieWatchabilityDto implements MovieWatchability {
+  @ApiProperty({ type: MovieWatchabilityItemsDto })
   items: MovieWatchabilityItems[];
 }
 
@@ -170,6 +177,9 @@ export class MovieDto implements Movie {
   id: string;
 
   @ApiProperty({ description: 'Id фильма с кинопоиска' })
+  @IsOptional()
+  @IsNumber()
+  @Transform(({ value }) => Number(value))
   kpId: number;
 
   @ApiProperty({
@@ -247,16 +257,16 @@ export class MovieDto implements Movie {
   @ApiProperty({ type: MovieTechnologyDto })
   technology: MovieTechnologyDto;
 
-  @ApiProperty({type: MovieNameItemDto })
+  @ApiProperty({ type: MovieNameItemDto })
   countries: MovieNameItemDto[];
 
-  @ApiProperty({type: MovieNameItemDto })
+  @ApiProperty({ type: MovieNameItemDto })
   genres: MovieNameItemDto[];
 
-  @ApiProperty({type: MovieReleaseYearsDto })
+  @ApiProperty({ type: MovieReleaseYearsDto })
   releaseYears: MovieReleaseYearsDto[];
 
-  @ApiProperty({type: MovieWatchabilityDto })
+  @ApiProperty({ type: MovieWatchabilityDto })
   watchability: MovieWatchabilityDto | null;
 
   // Date properties
