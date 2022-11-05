@@ -29,6 +29,7 @@ export class ParseDotNotationQuery<I = Filters>
 
     const object = plainToInstance(metatype, payload);
     const errors = await validate(object);
+    // TODO: Переделать на кастомный класс ошибки
     if (errors.length > 0) {
       throw new BadRequestException(this.flattenValidationErrors(errors));
     }
