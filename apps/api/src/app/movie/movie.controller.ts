@@ -5,6 +5,7 @@ import { MovieService } from './movie.service';
 import { FindManyMovieDto } from './dto/find-many-movie.dto';
 import { ParseDotNotationQuery } from '@common/pipes';
 import { ApiDotNotationQuery } from '@common/decorators';
+import { PaginatedQueryDto } from '@common/dto';
 
 @ApiTags('Movies')
 @Controller('movie')
@@ -13,7 +14,7 @@ export class MovieController {
 
   @Get()
   @ApiOperation({ summary: 'Поиск фильмов' })
-  @ApiDotNotationQuery(MovieDto)
+  @ApiDotNotationQuery(MovieDto, PaginatedQueryDto)
   @ApiResponse({ type: MovieDto, isArray: true })
   async finManyByQuery(
     @Query(ParseDotNotationQuery, ValidationPipe) dto: FindManyMovieDto
