@@ -1,11 +1,8 @@
-# common-pipes
+# Common pipes
 
-This library was generated with [Nx](https://nx.dev).
+## ParseDotNotationQuery
+Валидирует и трансформирует dot notation объекты, которые используются в v1 версии api.
+Этот pipe нужен только для поддержки обратной совместимости. 
 
-## Running unit tests
-
-Run `nx test common-pipes` to execute the unit tests via [Jest](https://jestjs.io).
-
-## Running lint
-
-Run `nx lint common-pipes` to execute the lint via [ESLint](https://eslint.org/).
+Принимает связку field + search и sortField + sortType параметрами. На основе них возвращает объект, который можно использовать для формирования запроса к базе данных.
+Валирует объекты на основе DTO.
