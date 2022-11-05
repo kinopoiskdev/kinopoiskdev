@@ -16,9 +16,9 @@ export class MovieController {
   @ApiDotNotationQuery(MovieDto)
   @ApiResponse({ type: MovieDto, isArray: true })
   async finManyByQuery(
-    @Query(ParseDotNotationQuery, ValidationPipe) query: FindManyMovieDto
+    @Query(ParseDotNotationQuery, ValidationPipe) dto: FindManyMovieDto
   ): Promise<MovieDto[]> {
-    return this.movieService.findMany(query);
+    return this.movieService.findMany(dto);
   }
 
   @Get(':kpId')
