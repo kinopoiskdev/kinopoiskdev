@@ -5,9 +5,10 @@ import {
   Injectable,
   PipeTransform,
 } from '@nestjs/common';
-import { validate } from 'class-validator';
+import { validate, ValidationError } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 import { RemoveArrayBrackets } from '@common/utils';
+import { iterate } from 'iterare';
 
 type Filters = {
   field?: string[];
@@ -29,7 +30,7 @@ export class ParseDotNotationQuery<I = Filters>
     const object = plainToInstance(metatype, payload);
     const errors = await validate(object);
     if (errors.length > 0) {
-      throw new BadRequestException('Validation failed');
+      throw new BadRequestException(this.flattenValidationErrors(errors));
     }
     return object;
   }
@@ -62,5 +63,55 @@ export class ParseDotNotationQuery<I = Filters>
   private toValidate(metatype: Function): boolean {
     const types: Function[] = [String, Boolean, Number, Array, Object];
     return !types.includes(metatype);
+  }
+
+  protected mapChildrenToValidationErrors(
+    error: ValidationError,
+    parentPath?: string
+  ): ValidationError[] {
+    if (!(error.children && error.children.length)) {
+      return [error];
+    }
+    const validationErrors = [];
+    parentPath = parentPath
+      ? `${parentPath}.${error.property}`
+      : error.property;
+    for (const item of error.children) {
+      if (item.children && item.children.length) {
+        validationErrors.push(
+          ...this.mapChildrenToValidationErrors(item, parentPath)
+        );
+      }
+      validationErrors.push(
+        this.prependConstraintsWithParentProp(parentPath, item)
+      );
+    }
+    return validationErrors;
+  }
+
+  protected prependConstraintsWithParentProp(
+    parentPath: string,
+    error: ValidationError
+  ): ValidationError {
+    const constraints = {};
+    for (const key in error.constraints) {
+      constraints[key] = `${parentPath}.${error.constraints[key]}`;
+    }
+    return {
+      ...error,
+      constraints,
+    };
+  }
+
+  protected flattenValidationErrors(
+    validationErrors: ValidationError[]
+  ): string[] {
+    return iterate(validationErrors)
+      .map((error) => this.mapChildrenToValidationErrors(error))
+      .flatten()
+      .filter((item) => !!item.constraints)
+      .map((item) => Object.values(item.constraints))
+      .flatten()
+      .toArray();
   }
 }
