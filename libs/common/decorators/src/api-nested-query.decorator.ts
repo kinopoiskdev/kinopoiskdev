@@ -1,10 +1,10 @@
+import { applyDecorators } from '@nestjs/common';
 import {
   ApiExtraModels,
   ApiQuery,
   ApiQueryOptions,
   getSchemaPath,
 } from '@nestjs/swagger';
-import { applyDecorators } from '@nestjs/common';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/ban-types
 function getDecorators(fn: Function) {
@@ -26,7 +26,11 @@ function getDecorators(fn: Function) {
       property
     );
     const subClass = meta.type();
-
+    console.log('subClass', subClass);
+    console.log('propertyType', propertyType);
+    console.log('meta', meta);
+    console.log('property', property);
+    if (subClass) getDecorators(subClass);
     if (typeof subClass === 'function') {
       const query: ApiQueryOptions = {
         required: meta.required,
