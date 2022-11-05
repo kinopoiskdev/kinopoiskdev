@@ -4,7 +4,9 @@ import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 
 @Injectable()
 export class ParseQuery<I = any, O = any> implements PipeTransform<I, O> {
-  transform(value: I, metadata: ArgumentMetadata): O {
+  transform(value: I, { type }: ArgumentMetadata): O {
+    if (type !== 'query') return value as unknown as O;
+
     return this.transformQuery(value);
   }
 
@@ -23,3 +25,4 @@ export class ParseQuery<I = any, O = any> implements PipeTransform<I, O> {
     return query as unknown as O;
   }
 }
+``;

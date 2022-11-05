@@ -1,14 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types*/
-import {
-  ArgumentMetadata,
-  BadRequestException,
-  Injectable,
-  PipeTransform,
-} from '@nestjs/common';
-import { validate, ValidationError } from 'class-validator';
+import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { RemoveArrayBrackets } from '@common/utils';
-import { iterate } from 'iterare';
 
 type Filters = {
   field?: string[];
@@ -22,18 +15,15 @@ type Filters = {
 export class ParseDotNotationQuery<I = Filters>
   implements PipeTransform<I, any>
 {
-  async transform(value: I, { metatype }: ArgumentMetadata): Promise<any> {
+  async transform(
+    value: I,
+    { metatype, type }: ArgumentMetadata
+  ): Promise<any> {
+    if (type !== 'query') return value;
     if (!metatype || !this.toValidate(metatype)) return value;
 
     const payload = this.transformDotNotationQuery(value);
-
-    const object = plainToInstance(metatype, payload);
-    const errors = await validate(object);
-    // TODO: Переделать на кастомный класс ошибки
-    if (errors.length > 0) {
-      throw new BadRequestException(this.flattenValidationErrors(errors));
-    }
-    return object;
+    return plainToInstance(metatype, payload);
   }
 
   private transformDotNotationQuery(query: Filters): any {
@@ -64,55 +54,5 @@ export class ParseDotNotationQuery<I = Filters>
   private toValidate(metatype: Function): boolean {
     const types: Function[] = [String, Boolean, Number, Array, Object];
     return !types.includes(metatype);
-  }
-
-  protected mapChildrenToValidationErrors(
-    error: ValidationError,
-    parentPath?: string
-  ): ValidationError[] {
-    if (!(error.children && error.children.length)) {
-      return [error];
-    }
-    const validationErrors = [];
-    parentPath = parentPath
-      ? `${parentPath}.${error.property}`
-      : error.property;
-    for (const item of error.children) {
-      if (item.children && item.children.length) {
-        validationErrors.push(
-          ...this.mapChildrenToValidationErrors(item, parentPath)
-        );
-      }
-      validationErrors.push(
-        this.prependConstraintsWithParentProp(parentPath, item)
-      );
-    }
-    return validationErrors;
-  }
-
-  protected prependConstraintsWithParentProp(
-    parentPath: string,
-    error: ValidationError
-  ): ValidationError {
-    const constraints = {};
-    for (const key in error.constraints) {
-      constraints[key] = `${parentPath}.${error.constraints[key]}`;
-    }
-    return {
-      ...error,
-      constraints,
-    };
-  }
-
-  protected flattenValidationErrors(
-    validationErrors: ValidationError[]
-  ): string[] {
-    return iterate(validationErrors)
-      .map((error) => this.mapChildrenToValidationErrors(error))
-      .flatten()
-      .filter((item) => !!item.constraints)
-      .map((item) => Object.values(item.constraints))
-      .flatten()
-      .toArray();
   }
 }

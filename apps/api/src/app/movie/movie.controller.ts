@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, ValidationPipe } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MovieDto } from './dto/movie.dto';
 import { MovieService } from './movie.service';
@@ -14,7 +14,7 @@ export class MovieController {
   @ApiOperation({ summary: 'Поиск фильмов' })
   @ApiResponse({ type: MovieDto, isArray: true })
   async finManyByQuery(
-    @Query(ParseDotNotationQuery) query: FindManyMovieDto
+    @Query(ParseDotNotationQuery, ValidationPipe) query: FindManyMovieDto
   ): Promise<MovieDto[]> {
     return this.movieService.findMany(query);
   }

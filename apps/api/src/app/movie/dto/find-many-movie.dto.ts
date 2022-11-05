@@ -5,4 +5,9 @@ export class FindManyMovieDto extends AbstractFindManyDto(
   MovieDto,
   MovieDto,
   PaginatedQueryDto
-) {}
+) {
+  constructor(partial: Partial<FindManyMovieDto>) {
+    super(partial);
+    Object.assign(this, partial);
+  }
+}
