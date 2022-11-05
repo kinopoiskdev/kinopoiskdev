@@ -16,6 +16,8 @@ function getDecorators(fn: Function) {
       constructor,
       property
     );
+
+    if (typeof meta.type !== 'function') return [property];
     const subClass = meta.type();
 
     if (typeof subClass === 'function') {

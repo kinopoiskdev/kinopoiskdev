@@ -26,10 +26,7 @@ function getDecorators(fn: Function) {
       property
     );
     const subClass = meta.type();
-    console.log('subClass', subClass);
-    console.log('propertyType', propertyType);
-    console.log('meta', meta);
-    console.log('property', property);
+
     if (subClass) getDecorators(subClass);
     if (typeof subClass === 'function') {
       const query: ApiQueryOptions = {
