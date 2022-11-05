@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@common/pipes": ["libs/common/pipes/src/index.ts"],
+      "@common/dto": ["libs/common/dto/src/index.ts"],
       "@prisma": ["libs/prisma/src/index.ts"]
     }
   },
