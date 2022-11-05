@@ -12,17 +12,17 @@ export function AbstractFindManyDto<TQueryDto, TSortDto, TPaginationDto>(
     @Type(() => QueryDto)
     @IsOptional()
     @ValidateNested({ each: true })
-    query: TQueryDto;
+    public query: TQueryDto;
 
     @Type(() => SortDto)
     @IsOptional()
     @ValidateNested({ each: true })
-    sort: TSortDto;
+    public sort: TSortDto;
 
     @Type(() => PaginationDto)
     @IsOptional()
     @ValidateNested()
-    pagination: TPaginationDto;
+    public pagination: TPaginationDto;
 
     protected constructor(partials: Partial<AbstractFindManyDto>) {
       Object.assign(this, partials);
