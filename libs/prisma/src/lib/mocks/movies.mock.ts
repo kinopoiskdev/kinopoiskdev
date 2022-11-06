@@ -2,6 +2,8 @@ import {
   Movie,
   MovieStatus,
   MovieType,
+  Person,
+  PersonFact,
 } from '../generated/prisma-client/index';
 
 export const movies: Omit<Movie, 'id' | 'createdAt' | 'updatedAt'>[] = [
@@ -393,5 +395,24 @@ export const movies: Omit<Movie, 'id' | 'createdAt' | 'updatedAt'>[] = [
     top250: null,
     status: null,
     distributors: null,
+  },
+];
+
+export const persons: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>[] = [
+  {
+    kpId: 9144,
+    age: 65,
+    birthPlace: [],
+    birthday: new Date(),
+    countAwards: 1,
+    death: null,
+    deathPlace: [],
+    enName: 'Tom Hanks',
+    growth: 183,
+    name: 'Том Хэнкс',
+    photo: 'https://st.kp.yandex.net/images/actor_iphone/iphone360_9144.jpg',
+    profession: ['PRODUCER', 'ACTOR'],
+    sex: 'Male',
+    spouses: [],
   },
 ];
