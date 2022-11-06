@@ -1,5 +1,6 @@
 import { IsNumber, IsOptional, Max, Min } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ParseNumber } from '@common/decorators';
 
 export class PaginatedQueryDto {
   @ApiPropertyOptional({
@@ -10,6 +11,7 @@ export class PaginatedQueryDto {
   @IsOptional()
   @IsNumber()
   @Min(1)
+  @ParseNumber()
   page: number;
 
   @ApiPropertyOptional({
@@ -22,5 +24,6 @@ export class PaginatedQueryDto {
   @IsNumber()
   @Min(1)
   @Max(250)
+  @ParseNumber()
   limit: number;
 }

@@ -29,14 +29,14 @@ export class ParseDotNotationQuery<I = Filters>
   private transformDotNotationQuery(query: Filters): any {
     if (typeof query !== 'object' || !query) return query;
     query = RemoveArrayBrackets(query);
-    const { field, search, sortField, sortType, ...params } = query;
+    const { field, search, sortField, sortType, ...paginationObj } = query;
 
     const queryObj = this.parseDotNotationObj(ToArray(field), ToArray(search));
     const sortObj = this.parseDotNotationObj(
       ToArray(sortField),
       ToArray(sortType)
     );
-    return { query: queryObj, sort: sortObj, ...params };
+    return { query: queryObj, sort: sortObj, pagination: paginationObj };
   }
 
   // Парсинг dot notation строки "parentKey.key" в объект { parentKey: { key: value } } с присвоением значение value из search
