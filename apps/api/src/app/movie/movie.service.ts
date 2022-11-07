@@ -40,6 +40,40 @@ export class MovieService {
       where: {
         kpId,
       },
+      include: {
+        sequelsAndPrequels: {
+          include: {
+            movie: {
+              select: {
+                kpId: true,
+                name: true,
+                enName: true,
+                rating: true,
+                year: true,
+              }
+            },
+
+          }
+        },
+        persons: {
+          include: {
+            person: true,
+          }
+        },
+        similarMovies: {
+          include: {
+            movie: {
+              select: {
+                kpId: true,
+                name: true,
+                enName: true,
+                rating: true,
+                year: true,
+              }
+            }
+          }
+        },
+      }
     });
   }
 }
