@@ -357,7 +357,6 @@ model MovieFact {
 
 model SequelsAndPrequel {
   id             String         @id @default(auto()) @map("_id") @db.ObjectId
-  kpId           Int
   // Enum properties
   relationType   MovieRelations
   // Date proprties
@@ -368,6 +367,8 @@ model SequelsAndPrequel {
   movieId        String         @db.ObjectId
   relatedMovie   Movie          @relation(fields: [relatedMovieId], references: [id], name: "relatedSqlMovie")
   relatedMovieId String         @db.ObjectId
+
+  @@unique([movieId, relatedMovieId], name: "SequelsAndPrequel_movieId_relatedMovieId_unique_constraint")
 }
 
 model SimilarMovie {
@@ -380,6 +381,8 @@ model SimilarMovie {
   movieId        String   @db.ObjectId
   relatedMovie   Movie    @relation(fields: [relatedMovieId], references: [id], name: "relatedSimalarMovie")
   relatedMovieId String   @db.ObjectId
+
+  @@unique([movieId, relatedMovieId], name: "SimilarMovie_movieId_relatedMovieId_unique_constraint")
 }
 
 model Movie {
