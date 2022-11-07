@@ -37,6 +37,11 @@ enum MovieStatus {
   POST_PRODUCTION
 }
 
+enum MovieRelations {
+  BEFORE
+  AFTER
+}
+
 // Person enums
 enum ProfessionType {
   ACTOR // Актер
@@ -350,57 +355,79 @@ model MovieFact {
   movieId   String   @db.ObjectId
 }
 
+model SequelsAndPrequel {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  kpId         Int
+  // Enum properties
+  relationType MovieRelations
+  // Date proprties
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  // Relations
+  movie        Movie          @relation(fields: [movieId], references: [id])
+  movieId      String         @db.ObjectId
+}
+
+model SimilarMovie {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  kpId      Int
+  // Date proprties
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // Relations
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  movieId   String   @db.ObjectId
+}
+
 model Movie {
   // Id properties
-  id                            String              @id @default(auto()) @map("_id") @db.ObjectId
-  kpId                          Int                 @unique
-  externalId                    MovieExternalId?
+  id                 String              @id @default(auto()) @map("_id") @db.ObjectId
+  kpId               Int                 @unique
+  externalId         MovieExternalId?
   // String properties
-  name                          String?
-  names                         String[]
-  enName                        String?
-  alternativeName               String?
-  description                   String?
-  ratingMpaa                    String?
-  shortDescription              String?
-  slogan                        String?
+  name               String?
+  names              String[]
+  enName             String?
+  alternativeName    String?
+  description        String?
+  ratingMpaa         String?
+  shortDescription   String?
+  slogan             String?
   //Int properties
-  year                          Int?
-  movieLength                   Int?
-  ageRating                     Int?
-  top10                         Int?
-  top250                        Int?
+  year               Int?
+  movieLength        Int?
+  ageRating          Int?
+  top10              Int?
+  top250             Int?
   // Enum properties
-  type                          MovieType?
-  status                        MovieStatus?
-  genres                        MovieNameItem[]
-  countries                     MovieNameItem[]
+  type               MovieType?
+  status             MovieStatus?
+  genres             MovieNameItem[]
+  countries          MovieNameItem[]
   // Type properties
-  rating                        MovieRating
-  budget                        MovieBudget?
-  distributors                  MovieDistributors?
-  votes                         MovieVotes?
-  fees                          MovieFees?
-  premiere                      MoviePremiere?
-  technology                    MovieTechnology?
-  watchability                  MovieWatchability?
-  releaseYears                  MovieReleaseYears[]
+  rating             MovieRating
+  budget             MovieBudget?
+  distributors       MovieDistributors?
+  votes              MovieVotes?
+  fees               MovieFees?
+  premiere           MoviePremiere?
+  technology         MovieTechnology?
+  watchability       MovieWatchability?
+  releaseYears       MovieReleaseYears[]
   // Date proprties
-  createdAt                     DateTime            @default(now())
-  updatedAt                     DateTime            @updatedAt
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
   // Relations
-  images                        Image[]
-  videos                        Video[]
-  seasons                       Season[]
-  persons                       MovieOnPerson[]
-  facts                         MovieFact[]
-  review                        Review[]
+  images             Image[]
+  videos             Video[]
+  seasons            Season[]
+  persons            MovieOnPerson[]
+  facts              MovieFact[]
+  review             Review[]
   // Sequels and prequels
-  movieHavingSequelsAndPrequels Movie?               @relation("SequelsAndPrequels", fields: [id], references: [id], onUpdate: NoAction)
-  sequelsAndPrequels            Movie[]             @relation("SequelsAndPrequels")
+  sequelsAndPrequels SequelsAndPrequel[]
   // Similar movies
-  movieHavingSimilar            Movie?               @relation("SimilarMovies", fields: [id], references: [id], onUpdate: NoAction)
-  similarMovies                 Movie[]             @relation("SimilarMovies")
+  similarMovies      SimilarMovie[]
 
   @@fulltext([name, enName, alternativeName, description, shortDescription, slogan])
 }
