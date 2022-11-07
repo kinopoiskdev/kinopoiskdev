@@ -73,6 +73,7 @@ export class MovieService {
             }
           }
         },
+        facts: true,
       }
     });
   }

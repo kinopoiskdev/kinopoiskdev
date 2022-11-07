@@ -429,7 +429,7 @@ model Movie {
   seasons                   Season[]
   persons                   MovieOnPerson[]
   facts                     MovieFact[]
-  review                    Review[]
+  reviews                   Review[]
   // Sequels and prequels
   sequelsAndPrequels        SequelsAndPrequel[] @relation("sqlMovie")
   relatedSequelsAndPrequels SequelsAndPrequel[] @relation("relatedSqlMovie")
