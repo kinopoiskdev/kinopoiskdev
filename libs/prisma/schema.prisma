@@ -356,78 +356,83 @@ model MovieFact {
 }
 
 model SequelsAndPrequel {
-  id           String         @id @default(auto()) @map("_id") @db.ObjectId
-  kpId         Int
+  id             String         @id @default(auto()) @map("_id") @db.ObjectId
+  kpId           Int
   // Enum properties
-  relationType MovieRelations
+  relationType   MovieRelations
   // Date proprties
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
   // Relations
-  movie        Movie          @relation(fields: [movieId], references: [id])
-  movieId      String         @db.ObjectId
+  movie          Movie          @relation(fields: [movieId], references: [id], name: "sqlMovie")
+  movieId        String         @db.ObjectId
+  relatedMovie   Movie          @relation(fields: [relatedMovieId], references: [id], name: "relatedSqlMovie")
+  relatedMovieId String         @db.ObjectId
 }
 
 model SimilarMovie {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  kpId      Int
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
   // Date proprties
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
   // Relations
-  movie     Movie    @relation(fields: [movieId], references: [id])
-  movieId   String   @db.ObjectId
+  movie          Movie    @relation(fields: [movieId], references: [id], name: "simalarMovie")
+  movieId        String   @db.ObjectId
+  relatedMovie   Movie    @relation(fields: [relatedMovieId], references: [id], name: "relatedSimalarMovie")
+  relatedMovieId String   @db.ObjectId
 }
 
 model Movie {
   // Id properties
-  id                 String              @id @default(auto()) @map("_id") @db.ObjectId
-  kpId               Int                 @unique
-  externalId         MovieExternalId?
+  id                        String              @id @default(auto()) @map("_id") @db.ObjectId
+  kpId                      Int                 @unique
+  externalId                MovieExternalId?
   // String properties
-  name               String?
-  names              String[]
-  enName             String?
-  alternativeName    String?
-  description        String?
-  ratingMpaa         String?
-  shortDescription   String?
-  slogan             String?
+  name                      String?
+  names                     String[]
+  enName                    String?
+  alternativeName           String?
+  description               String?
+  ratingMpaa                String?
+  shortDescription          String?
+  slogan                    String?
   //Int properties
-  year               Int?
-  movieLength        Int?
-  ageRating          Int?
-  top10              Int?
-  top250             Int?
+  year                      Int?
+  movieLength               Int?
+  ageRating                 Int?
+  top10                     Int?
+  top250                    Int?
   // Enum properties
-  type               MovieType?
-  status             MovieStatus?
-  genres             MovieNameItem[]
-  countries          MovieNameItem[]
+  type                      MovieType?
+  status                    MovieStatus?
+  genres                    MovieNameItem[]
+  countries                 MovieNameItem[]
   // Type properties
-  rating             MovieRating
-  budget             MovieBudget?
-  distributors       MovieDistributors?
-  votes              MovieVotes?
-  fees               MovieFees?
-  premiere           MoviePremiere?
-  technology         MovieTechnology?
-  watchability       MovieWatchability?
-  releaseYears       MovieReleaseYears[]
+  rating                    MovieRating
+  budget                    MovieBudget?
+  distributors              MovieDistributors?
+  votes                     MovieVotes?
+  fees                      MovieFees?
+  premiere                  MoviePremiere?
+  technology                MovieTechnology?
+  watchability              MovieWatchability?
+  releaseYears              MovieReleaseYears[]
   // Date proprties
-  createdAt          DateTime            @default(now())
-  updatedAt          DateTime            @updatedAt
+  createdAt                 DateTime            @default(now())
+  updatedAt                 DateTime            @updatedAt
   // Relations
-  images             Image[]
-  videos             Video[]
-  seasons            Season[]
-  persons            MovieOnPerson[]
-  facts              MovieFact[]
-  review             Review[]
+  images                    Image[]
+  videos                    Video[]
+  seasons                   Season[]
+  persons                   MovieOnPerson[]
+  facts                     MovieFact[]
+  review                    Review[]
   // Sequels and prequels
-  sequelsAndPrequels SequelsAndPrequel[]
+  sequelsAndPrequels        SequelsAndPrequel[] @relation("sqlMovie")
+  relatedSequelsAndPrequels SequelsAndPrequel[] @relation("relatedSqlMovie")
   // Similar movies
-  similarMovies      SimilarMovie[]
+  similarMovies             SimilarMovie[]     @relation("simalarMovie")
+  relatedSimilarMovies      SimilarMovie[] @relation("relatedSimalarMovie")
 
   @@fulltext([name, enName, alternativeName, description, shortDescription, slogan])
 }
