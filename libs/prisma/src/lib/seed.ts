@@ -2,7 +2,7 @@ import * as dotenv from 'dotenv';
 import { PrismaClient } from './generated/prisma-client/index';
 import { Logger } from '@nestjs/common';
 import { join } from 'path';
-import { movies, persons, personsFacts } from './mocks/movies.mock';
+import { movieFacts, movies, persons, personsFacts } from './mocks/movies.mock';
 
 const prisma = new PrismaClient();
 
@@ -50,6 +50,12 @@ async function main() {
       },
     });
     logger.log('Movies relations updated');
+
+    logger.log('PersonsFacts run...');
+    await prisma.movieFact.createMany({
+      data: movieFacts.map((f) => ({ ...f, movieId: foundMovie.id })),
+    });
+    logger.log('PersonsFacts done');
     logger.log('Movies done');
 
     logger.log('Persons run...');
