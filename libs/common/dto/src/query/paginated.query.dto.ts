@@ -28,7 +28,7 @@ export class PaginatedQueryDto {
   @Min(1)
   @Max(250)
   @ParseNumber()
-  @SetDefaultValue(1)
+  @SetDefaultValue(10)
   @Expose()
   limit: number;
 }
