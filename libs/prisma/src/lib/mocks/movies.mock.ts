@@ -1,4 +1,6 @@
 import {
+  Image,
+  ImageType,
   Movie,
   MovieFact,
   MovieStatus,
@@ -445,34 +447,57 @@ export const personsFacts: Pick<PersonFact, 'personKpId' | 'value'>[] = [
   },
 ];
 
-export const movieFacts: Pick<MovieFact, 'movieKpId' | 'value' | 'spoiler'>[] = [
+export const movieFacts: Pick<MovieFact, 'movieKpId' | 'value' | 'spoiler'>[] =
+  [
+    {
+      spoiler: false,
+      movieKpId: 666,
+      value:
+        'Его отец был шеф-поваром местного ресторана, мать работала там же официанткой. Томми был в семье третьим ребенком. Через пять лет после его рождения Хэнксы развелись, и по американскому законодательству трех старших детей (Тома, Ларри и Сандру) забрал отец.',
+    },
+    {
+      spoiler: false,
+      movieKpId: 666,
+      value:
+        'Православный христианин. К православной церкви принадлежит и его жена Рита Уилсон.',
+    },
+    {
+      spoiler: false,
+      movieKpId: 666,
+      value: 'У Тома Хэнкса английские, немецкие и португальские корни.',
+    },
+    {
+      spoiler: true,
+      movieKpId: 666,
+      value:
+        'Том Хэнкс - второй в истории актер (первым был Спенсер Трэйси), выигрывавший премию «Оскар» два года подряд (за роль в картинах «Филадельфия» (1993) и «Форрест Гамп» (1994)).',
+    },
+    {
+      spoiler: true,
+      movieKpId: 666,
+      value:
+        'В июне 2013 года у Хэнкса родилась вторая внучка, которую назвали Шарлотта.',
+    },
+  ];
+
+export const movieImages: Omit<
+  Image,
+  'id' | 'movieId' | 'movieKpId' | 'createdAt' | 'updatedAt' | 'language'
+>[] = [
   {
-    spoiler: false,
-    movieKpId: 666,
-    value:
-      'Его отец был шеф-поваром местного ресторана, мать работала там же официанткой. Томми был в семье третьим ребенком. Через пять лет после его рождения Хэнксы развелись, и по американскому законодательству трех старших детей (Тома, Ларри и Сандру) забрал отец.',
+    url: 'https://www.themoviedb.org/t/p/original/uu0YqEDFgAz792NfnY8wWC5wBcb.jpg',
+    previewUrl:
+      'https://www.themoviedb.org/t/p/w500/uu0YqEDFgAz792NfnY8wWC5wBcb.jpg',
+    height: 1395,
+    width: 2480,
+    type: ImageType.BACKDROP,
   },
   {
-    spoiler: false,
-    movieKpId: 666,
-    value:
-      'Православный христианин. К православной церкви принадлежит и его жена Рита Уилсон.',
-  },
-  {
-    spoiler: false,
-    movieKpId: 666,
-    value: 'У Тома Хэнкса английские, немецкие и португальские корни.',
-  },
-  {
-    spoiler: true,
-    movieKpId: 666,
-    value:
-      'Том Хэнкс - второй в истории актер (первым был Спенсер Трэйси), выигрывавший премию «Оскар» два года подряд (за роль в картинах «Филадельфия» (1993) и «Форрест Гамп» (1994)).',
-  },
-  {
-    spoiler: true,
-    movieKpId: 666,
-    value:
-      'В июне 2013 года у Хэнкса родилась вторая внучка, которую назвали Шарлотта.',
+    url: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/b42b2e81-e6c9-41e4-b3ef-e5e2ba9c2d8d/orig',
+    previewUrl:
+      'https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/b42b2e81-e6c9-41e4-b3ef-e5e2ba9c2d8d/360',
+    height: 1395,
+    width: 2480,
+    type: ImageType.POSTER,
   },
 ];
