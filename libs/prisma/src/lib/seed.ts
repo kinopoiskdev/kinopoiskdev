@@ -49,6 +49,13 @@ async function main() {
         },
       },
     });
+    await prisma.movieFact.createMany({
+      data: movieFacts.map((fact) => ({
+        ...fact,
+        movieKpId: foundMovie.kpId,
+        movieId: foundMovie.id,
+      })),
+    });
     logger.log('Movies relations updated');
 
     logger.log('PersonsFacts run...');
