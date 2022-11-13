@@ -85,11 +85,16 @@ enum PersonSex {
 enum ImageType {
   BACKDROP
   POSTER
-  FRAME
   LOGO
   STILL
   SHOOTING
   SCREENSHOT
+  WALLPAPER
+  COVER
+  PROMO
+  FAN_ART
+  PHOTO
+  EVENT
 }
 
 // Video enums
@@ -232,23 +237,27 @@ model Video {
 }
 
 model Image {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  movieKpId  Int
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  movieKpId  Int?
+  personKpId Int?
   // String properties
-  url        String    @unique()
+  url        String     @unique()
   language   String?
   previewUrl String
   // Int properties
   height     Int?
   width      Int?
   // Enum properties
+  entityType EntityEnum
   type       ImageType
   // Date proprties
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
   // Relations
-  movie      Movie     @relation(fields: [movieId], references: [id])
-  movieId    String    @unique @db.ObjectId
+  movie      Movie?     @relation(fields: [movieId], references: [id])
+  movieId    String?    @unique @db.ObjectId
+  Person     Person?    @relation(fields: [personId], references: [id])
+  personId   String?    @db.ObjectId
 }
 
 model Season {
@@ -269,7 +278,7 @@ model Season {
 
 model Review {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  kpMovieId      Int
+  movieKpId      Int
   // String properties
   author         String
   review         String
@@ -288,23 +297,24 @@ model Review {
 }
 
 model Fact {
-  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
   movieKpId  Int?
   personKpId Int?
-
+  // Enum properties
   entityType EntityEnum
-
-  spoiler   Boolean?
-  type      String?
-  value     String
+  // Boolean properties
+  spoiler    Boolean?
+  // String properties
+  type       String?
+  value      String
   // Date proprties
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
   // Relations
-  movie     Movie?   @relation(fields: [movieId], references: [id])
-  movieId   String?  @db.ObjectId
-  personId  String?  @db.ObjectId
-  person    Person?  @relation(fields: [personId], references: [id])
+  movie      Movie?     @relation(fields: [movieId], references: [id])
+  movieId    String?    @db.ObjectId
+  personId   String?    @db.ObjectId
+  person     Person?    @relation(fields: [personId], references: [id])
 }
 
 model Person {
@@ -313,7 +323,6 @@ model Person {
   // String properties
   enName      String?
   name        String?
-  photo       String
   sex         PersonSex?
   birthPlace  String[]
   deathPlace  String[]
@@ -331,6 +340,7 @@ model Person {
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   // Relations
+  photos      Image[]
   movies      MovieOnPerson[]
   facts       Fact[]
 }
@@ -338,7 +348,7 @@ model Person {
 model MovieOnPerson {
   id          String           @id @default(auto()) @map("_id") @db.ObjectId
   kpId        Int              @unique
-  kpMovieId   Int
+  movieKpId   Int
   // String properties
   description String
   // Enum properties

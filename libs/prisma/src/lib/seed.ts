@@ -80,7 +80,7 @@ async function main() {
       await prisma.movieOnPerson.create({
         data: {
           kpId: foundPerson.kpId,
-          kpMovieId: foundMovie.kpId,
+          movieKpId: foundMovie.kpId,
           movie: { connect: { id: foundMovie.id } },
           person: { connect: { id: foundPerson.id } },
           description: 'description',
