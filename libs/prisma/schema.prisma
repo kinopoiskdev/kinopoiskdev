@@ -244,6 +244,8 @@ model Image {
   url        String     @unique()
   language   String?
   previewUrl String
+  // Boolean properties
+  isMain     Boolean?
   // Int properties
   height     Int?
   width      Int?
