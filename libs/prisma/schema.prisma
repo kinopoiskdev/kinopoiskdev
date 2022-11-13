@@ -256,7 +256,7 @@ model Image {
   // Relations
   movie      Movie?     @relation(fields: [movieId], references: [id])
   movieId    String?    @unique @db.ObjectId
-  Person     Person?    @relation(fields: [personId], references: [id])
+  person     Person?    @relation(fields: [personId], references: [id])
   personId   String?    @db.ObjectId
 }
 
