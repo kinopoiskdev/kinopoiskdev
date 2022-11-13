@@ -2,7 +2,13 @@ import * as dotenv from 'dotenv';
 import { PrismaClient, EntityEnum } from './generated/prisma-client/index';
 import { Logger } from '@nestjs/common';
 import { join } from 'path';
-import { movieFacts, movies, persons, personsFacts } from './mocks/movies.mock';
+import {
+  images,
+  movieFacts,
+  movies,
+  persons,
+  personsFacts,
+} from './mocks/movies.mock';
 
 const prisma = new PrismaClient();
 
@@ -54,7 +60,7 @@ async function main() {
         ...fact,
         entityType: EntityEnum.MOVIE,
         movieKpId: foundMovie.kpId,
-        movieId: foundMovie.id,
+        movie: { connect: { id: foundMovie.id } },
       })),
     });
     logger.log('Movies relations updated');
@@ -69,7 +75,7 @@ async function main() {
       data: personsFacts.map((f) => ({
         ...f,
         entityType: EntityEnum.PERSON,
-        personId: savedPerson.id,
+        person: { connect: { id: savedPerson.id } },
       })),
     });
     logger.log('PersonsFacts done');
@@ -91,6 +97,24 @@ async function main() {
     logger.log('Person relations updated');
 
     logger.log('Images run...');
+    await prisma.image.createMany({
+      data: images
+        .filter((image) => image.entityType === EntityEnum.MOVIE)
+        .map((image) => ({
+          ...image,
+          movieKpId: foundMovie.kpId,
+          movie: { connect: { id: foundMovie.id } },
+        })),
+    });
+    await prisma.image.createMany({
+      data: images
+        .filter((image) => image.entityType === EntityEnum.PERSON)
+        .map((image) => ({
+          ...image,
+          personKpId: savedPerson.kpId,
+          person: { connect: { id: savedPerson.id } },
+        })),
+    });
 
     logger.log('Finish');
   }

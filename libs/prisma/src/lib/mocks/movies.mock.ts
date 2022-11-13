@@ -480,7 +480,7 @@ export const movieFacts: Pick<MovieFact, 'movieKpId' | 'value' | 'spoiler'>[] =
     },
   ];
 
-export const movieImages: Omit<
+export const images: Omit<
   Image,
   | 'id'
   | 'movieId'
