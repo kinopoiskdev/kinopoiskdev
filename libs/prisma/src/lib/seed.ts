@@ -60,7 +60,7 @@ async function main() {
         ...fact,
         entityType: EntityEnum.MOVIE,
         movieKpId: foundMovie.kpId,
-        movie: { connect: { id: foundMovie.id } },
+        movieId: foundMovie.id,
       })),
     });
     logger.log('Movies relations updated');
@@ -75,7 +75,7 @@ async function main() {
       data: personsFacts.map((f) => ({
         ...f,
         entityType: EntityEnum.PERSON,
-        person: { connect: { id: savedPerson.id } },
+        personId: savedPerson.id,
       })),
     });
     logger.log('PersonsFacts done');
@@ -102,9 +102,8 @@ async function main() {
         .filter((image) => image.entityType === EntityEnum.MOVIE)
         .map((image) => ({
           ...image,
-          isMain: true,
           movieKpId: foundMovie.kpId,
-          movie: { connect: { id: foundMovie.id } },
+          movieId: foundMovie.id,
         })),
     });
     await prisma.image.createMany({
@@ -112,9 +111,8 @@ async function main() {
         .filter((image) => image.entityType === EntityEnum.PERSON)
         .map((image) => ({
           ...image,
-          isMain: true,
           personKpId: savedPerson.kpId,
-          person: { connect: { id: savedPerson.id } },
+          personId: savedPerson.id,
         })),
     });
 
