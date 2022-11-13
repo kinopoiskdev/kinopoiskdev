@@ -17,6 +17,11 @@ datasource db {
 }
 
 // Movie enums
+enum EntityEnum {
+  MOVIE
+  PERSON
+}
+
 enum MovieType {
   ANIMATED_SERIES // Мульт-сериал
   ANIME // Аниме
@@ -282,6 +287,26 @@ model Review {
   movieId        String   @db.ObjectId
 }
 
+model Fact {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  movieKpId  Int?
+  personKpId Int?
+
+  entityType EntityEnum
+
+  spoiler   Boolean?
+  type      String?
+  value     String
+  // Date proprties
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // Relations
+  movie     Movie?   @relation(fields: [movieId], references: [id])
+  movieId   String?  @db.ObjectId
+  personId  String?  @db.ObjectId
+  person    Person?  @relation(fields: [personId], references: [id])
+}
+
 model Person {
   id          String           @id @default(auto()) @map("_id") @db.ObjectId
   kpId        Int              @unique
@@ -307,7 +332,7 @@ model Person {
   updatedAt   DateTime         @updatedAt
   // Relations
   movies      MovieOnPerson[]
-  facts       PersonFact[]
+  facts       Fact[]
 }
 
 model MovieOnPerson {
@@ -326,32 +351,6 @@ model MovieOnPerson {
   movieId     String           @db.ObjectId
   person      Person           @relation(fields: [personId], references: [id])
   personId    String           @db.ObjectId
-}
-
-model PersonFact {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  personKpId Int
-  value      String
-  // Date proprties
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  // Relations
-  personId   String   @db.ObjectId
-  person     Person   @relation(fields: [personId], references: [id])
-}
-
-model MovieFact {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  movieKpId Int
-  spoiler   Boolean?
-  type      String?
-  value     String
-  // Date proprties
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  // Relations
-  movie     Movie    @relation(fields: [movieId], references: [id])
-  movieId   String   @db.ObjectId
 }
 
 model SequelsAndPrequel {
@@ -427,14 +426,14 @@ model Movie {
   videos                    Video[]
   seasons                   Season[]
   persons                   MovieOnPerson[]
-  facts                     MovieFact[]
+  facts                     Fact[]
   reviews                   Review[]
   // Sequels and prequels
   sequelsAndPrequels        SequelsAndPrequel[] @relation("sqlMovie")
   relatedSequelsAndPrequels SequelsAndPrequel[] @relation("relatedSqlMovie")
   // Similar movies
-  similarMovies             SimilarMovie[]     @relation("simalarMovie")
-  relatedSimilarMovies      SimilarMovie[] @relation("relatedSimalarMovie")
+  similarMovies             SimilarMovie[]      @relation("simalarMovie")
+  relatedSimilarMovies      SimilarMovie[]      @relation("relatedSimalarMovie")
 
   @@fulltext([name, enName, alternativeName, description, shortDescription, slogan])
 }

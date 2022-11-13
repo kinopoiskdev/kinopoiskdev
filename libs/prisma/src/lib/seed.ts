@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { PrismaClient } from './generated/prisma-client/index';
+import { PrismaClient, EntityEnum } from './generated/prisma-client/index';
 import { Logger } from '@nestjs/common';
 import { join } from 'path';
 import { movieFacts, movies, persons, personsFacts } from './mocks/movies.mock';
@@ -49,20 +49,15 @@ async function main() {
         },
       },
     });
-    await prisma.movieFact.createMany({
+    await prisma.fact.createMany({
       data: movieFacts.map((fact) => ({
         ...fact,
+        entityType: EntityEnum.MOVIE,
         movieKpId: foundMovie.kpId,
         movieId: foundMovie.id,
       })),
     });
     logger.log('Movies relations updated');
-
-    logger.log('PersonsFacts run...');
-    await prisma.movieFact.createMany({
-      data: movieFacts.map((f) => ({ ...f, movieId: foundMovie.id })),
-    });
-    logger.log('PersonsFacts done');
     logger.log('Movies done');
 
     logger.log('Persons run...');
@@ -70,8 +65,12 @@ async function main() {
     logger.log('Persons done');
 
     logger.log('PersonsFacts run...');
-    await prisma.personFact.createMany({
-      data: personsFacts.map((f) => ({ ...f, personId: savedPerson.id })),
+    await prisma.fact.createMany({
+      data: personsFacts.map((f) => ({
+        ...f,
+        entityType: EntityEnum.PERSON,
+        personId: savedPerson.id,
+      })),
     });
     logger.log('PersonsFacts done');
     logger.log('Person relations run...');
@@ -90,6 +89,8 @@ async function main() {
       });
     }
     logger.log('Person relations updated');
+
+    logger.log('Images run...');
 
     logger.log('Finish');
   }
