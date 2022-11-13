@@ -1,3 +1,4 @@
+import { EntityEnum } from '../generated/prisma-client/index';
 import {
   Image,
   ImageType,
@@ -413,7 +414,6 @@ export const persons: Omit<Person, 'id' | 'createdAt' | 'updatedAt'>[] = [
     enName: 'Tom Hanks',
     growth: 183,
     name: 'Том Хэнкс',
-    photo: 'https://st.kp.yandex.net/images/actor_iphone/iphone360_9144.jpg',
     profession: ['PRODUCER', 'ACTOR'],
     sex: 'Male',
     spouses: [],
@@ -482,12 +482,20 @@ export const movieFacts: Pick<MovieFact, 'movieKpId' | 'value' | 'spoiler'>[] =
 
 export const movieImages: Omit<
   Image,
-  'id' | 'movieId' | 'movieKpId' | 'createdAt' | 'updatedAt' | 'language'
+  | 'id'
+  | 'movieId'
+  | 'movieKpId'
+  | 'personKpId'
+  | 'personId'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'language'
 >[] = [
   {
     url: 'https://www.themoviedb.org/t/p/original/uu0YqEDFgAz792NfnY8wWC5wBcb.jpg',
     previewUrl:
       'https://www.themoviedb.org/t/p/w500/uu0YqEDFgAz792NfnY8wWC5wBcb.jpg',
+    entityType: EntityEnum.MOVIE,
     height: 1395,
     width: 2480,
     type: ImageType.BACKDROP,
@@ -496,8 +504,18 @@ export const movieImages: Omit<
     url: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/b42b2e81-e6c9-41e4-b3ef-e5e2ba9c2d8d/orig',
     previewUrl:
       'https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/b42b2e81-e6c9-41e4-b3ef-e5e2ba9c2d8d/360',
+    entityType: EntityEnum.MOVIE,
     height: 1395,
     width: 2480,
     type: ImageType.POSTER,
+  },
+  {
+    url: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/b42b2e81-e6c9-41e4-b3ef-e5e2ba9c2d8d/orig',
+    previewUrl:
+      'https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/b42b2e81-e6c9-41e4-b3ef-e5e2ba9c2d8d/360',
+    entityType: EntityEnum.PERSON,
+    height: 1395,
+    width: 2480,
+    type: ImageType.PHOTO,
   },
 ];
