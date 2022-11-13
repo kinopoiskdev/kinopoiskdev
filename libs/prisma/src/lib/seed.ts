@@ -1,5 +1,5 @@
 import * as dotenv from 'dotenv';
-import { PrismaClient, EntityEnum } from './generated/prisma-client/index';
+import { EntityEnum, PrismaClient } from './generated/prisma-client/index';
 import { Logger } from '@nestjs/common';
 import { join } from 'path';
 import {
@@ -102,6 +102,7 @@ async function main() {
         .filter((image) => image.entityType === EntityEnum.MOVIE)
         .map((image) => ({
           ...image,
+          isMain: true,
           movieKpId: foundMovie.kpId,
           movie: { connect: { id: foundMovie.id } },
         })),
@@ -111,6 +112,7 @@ async function main() {
         .filter((image) => image.entityType === EntityEnum.PERSON)
         .map((image) => ({
           ...image,
+          isMain: true,
           personKpId: savedPerson.kpId,
           person: { connect: { id: savedPerson.id } },
         })),

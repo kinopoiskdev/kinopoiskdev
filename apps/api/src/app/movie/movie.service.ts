@@ -50,15 +50,14 @@ export class MovieService {
                 enName: true,
                 rating: true,
                 year: true,
-              }
+              },
             },
-
-          }
+          },
         },
         persons: {
           include: {
             person: true,
-          }
+          },
         },
         similarMovies: {
           include: {
@@ -69,12 +68,20 @@ export class MovieService {
                 enName: true,
                 rating: true,
                 year: true,
-              }
-            }
-          }
+              },
+            },
+          },
         },
         facts: true,
-      }
+        images: {
+          where: {
+            type: {
+              in: ['POSTER', 'BACKDROP'],
+            },
+            isMain: true,
+          },
+        },
+      },
     });
   }
 }
