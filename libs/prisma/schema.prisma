@@ -448,9 +448,7 @@ model Movie {
   relatedSimilarMovies      SimilarMovie[]      @relation("relatedSimalarMovie")
 
   @@fulltext([name, enName, alternativeName, description, shortDescription, slogan])
-  @@index([kpId], name: "Movie_kpId_index")
-  @@index([externalId.imdbId], name: "Movie_externalId_imdbId_index")
-  @@index([externalId.tmdb], name: "Movie_externalId_tmdbId_index")
-  @@index([externalId.kpHD], name: "Movie_externalId_kpHDId_index")
-
+  @@index([externalId.imdb], name: "Movie_externalId_imdb_index")
+  @@index([externalId.tmdb], name: "Movie_externalId_tmdb_index")
+  @@index([externalId.kpHD], name: "Movie_externalId_kpHD_index")
 }
