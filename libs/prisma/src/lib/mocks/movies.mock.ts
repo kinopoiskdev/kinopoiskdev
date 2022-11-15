@@ -7,6 +7,9 @@ import {
   MovieStatus,
   MovieType,
   Person,
+  Video,
+  VideoSource,
+  VideoType,
 } from '../generated/prisma-client/index';
 
 export const movies: Omit<Movie, 'id' | 'createdAt' | 'updatedAt'>[] = [
@@ -518,5 +521,14 @@ export const images: Omit<
     height: 1395,
     width: 2480,
     type: ImageType.PHOTO,
+  },
+];
+
+export const videos: Pick<Video, 'type' | 'name' | 'url' | 'source'>[] = [
+  {
+    name: 'Трейлер',
+    url: 'https://www.youtube.com/watch?v=XsXUVWy-Ld8',
+    type: VideoType.TRAILER,
+    source: VideoSource.YOUTUBE,
   },
 ];

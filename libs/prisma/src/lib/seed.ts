@@ -8,6 +8,7 @@ import {
   movies,
   persons,
   personsFacts,
+  videos,
 } from './mocks/movies.mock';
 
 const prisma = new PrismaClient();
@@ -116,6 +117,16 @@ async function main() {
         })),
     });
 
+    logger.log('Images done');
+
+    logger.log('Videos run...');
+    await prisma.video.createMany({
+      data: videos.map((video) => ({
+        ...video,
+        movieKpId: foundMovie.kpId,
+        movieId: foundMovie.id,
+      })),
+    });
     logger.log('Finish');
   }
 }
