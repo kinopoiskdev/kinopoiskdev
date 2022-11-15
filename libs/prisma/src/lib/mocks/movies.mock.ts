@@ -513,9 +513,9 @@ export const images: Omit<
     type: ImageType.POSTER,
   },
   {
-    url: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/b42b2e81-e6c9-41e4-b3ef-e5e2ba9c2d8d/orig',
+    url: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1946459/bd059288-7630-4078-9355-de91b0264737/orig',
     previewUrl:
-      'https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/b42b2e81-e6c9-41e4-b3ef-e5e2ba9c2d8d/360',
+      'https://avatars.mds.yandex.net/get-kinopoisk-image/1946459/bd059288-7630-4078-9355-de91b0264737/360',
     isMain: true,
     entityType: EntityEnum.PERSON,
     height: 1395,

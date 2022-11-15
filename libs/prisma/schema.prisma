@@ -257,7 +257,7 @@ model Image {
   updatedAt  DateTime   @updatedAt
   // Relations
   movie      Movie?     @relation(fields: [movieId], references: [id])
-  movieId    String?    @unique @db.ObjectId
+  movieId    String?    @db.ObjectId
   person     Person?    @relation(fields: [personId], references: [id])
   personId   String?    @db.ObjectId
 }
