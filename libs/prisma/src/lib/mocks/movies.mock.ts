@@ -7,6 +7,7 @@ import {
   MovieStatus,
   MovieType,
   Person,
+  Season,
   Video,
   VideoSource,
   VideoType,
@@ -532,3 +533,83 @@ export const videos: Pick<Video, 'type' | 'name' | 'url' | 'source'>[] = [
     source: VideoSource.YOUTUBE,
   },
 ];
+
+export const seasons: Pick<Season, 'episodesCount' | 'number' | 'episodes'>[] =
+  [
+    {
+      number: 1,
+      episodes: [
+        {
+          number: 10,
+          name: 'Пламя и кровь',
+          enName: 'Fire and Blood',
+          description: null,
+          date: new Date(),
+        },
+        {
+          number: 9,
+          name: 'Бейелор',
+          enName: 'Baelor',
+          description: null,
+          date: new Date(),
+        },
+        {
+          number: 8,
+          name: 'Острый конец',
+          enName: 'The Pointy End',
+          description: null,
+          date: new Date(),
+        },
+        {
+          number: 7,
+          name: 'Ты побеждаешь или погибаешь',
+          enName: 'You Win or You Die',
+          description: null,
+          date: new Date(),
+        },
+        {
+          number: 6,
+          name: 'Золотая корона',
+          enName: 'A Golden Crown',
+          description: null,
+          date: new Date(),
+        },
+        {
+          number: 5,
+          name: 'Волк и лев',
+          enName: 'The Wolf and the Lion',
+          description: null,
+          date: new Date(),
+        },
+        {
+          number: 4,
+          name: 'Калеки, бастарды и сломанные вещи',
+          enName: 'Cripples, Bastards, and Broken Things',
+          description: null,
+          date: new Date(),
+        },
+        {
+          number: 3,
+          name: 'Лорд Сноу',
+          enName: 'Lord Snow',
+          description: null,
+          date: new Date(),
+        },
+        {
+          number: 2,
+          name: 'Королевский тракт',
+          enName: 'The Kingsroad',
+          description: null,
+          date: new Date(),
+        },
+        {
+          number: 1,
+          name: 'Зима близко',
+          enName: 'Winter Is Coming',
+          description: null,
+          date: new Date(),
+        },
+      ],
+      episodesCount: 10,
+    },
+  ];

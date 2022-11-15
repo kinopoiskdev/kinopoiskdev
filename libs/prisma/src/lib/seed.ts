@@ -8,6 +8,7 @@ import {
   movies,
   persons,
   personsFacts,
+  seasons,
   videos,
 } from './mocks/movies.mock';
 
@@ -24,6 +25,9 @@ async function main() {
     const foundMovie = await prisma.movie.findFirst({ where: { kpId: 666 } });
     const foundRelationMovie = await prisma.movie.findFirst({
       where: { kpId: 435 },
+    });
+    const foundSeries = await prisma.movie.findFirst({
+      where: { kpId: 464963 },
     });
 
     logger.log('Update movie relations...');
@@ -62,6 +66,13 @@ async function main() {
         entityType: EntityEnum.MOVIE,
         movieKpId: foundMovie.kpId,
         movieId: foundMovie.id,
+      })),
+    });
+    await prisma.season.createMany({
+      data: seasons.map((season) => ({
+        ...season,
+        movieId: foundSeries.id,
+        movieKpId: foundSeries.kpId,
       })),
     });
     logger.log('Movies relations updated');
@@ -127,6 +138,8 @@ async function main() {
         movieId: foundMovie.id,
       })),
     });
+    logger.log('Videos done');
+
     logger.log('Finish');
   }
 }
