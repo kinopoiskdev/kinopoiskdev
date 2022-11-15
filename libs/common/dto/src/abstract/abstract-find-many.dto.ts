@@ -11,13 +11,13 @@ export function AbstractFindManyDto<TQueryDto, TSortDto, TPaginationDto>(
   abstract class AbstractFindManyDto {
     @Type(() => QueryDto)
     @IsOptional()
-    @ValidateNested({ each: true })
+    @ValidateNested()
     public query: TQueryDto;
 
     @Type(() => SortDto)
     @IsOptional()
-    @ValidateNested({ each: true })
-    public sort: TSortDto;
+    @ValidateNested()
+    public sortQuery: TSortDto;
 
     @Type(() => PaginationDto)
     @IsOptional()
