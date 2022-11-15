@@ -20,6 +20,7 @@
       "@common/pipes": ["libs/common/pipes/src/index.ts"],
       "@common/repositories": ["libs/common/repositories/src/index.ts"],
       "@common/utils": ["libs/common/utils/src/index.ts"],
+      "@common/types": ["libs/common/types/src/index.ts"],
       "@movie/dto": ["libs/movie/dto/src/index.ts"],
       "@prisma": ["libs/prisma/src/index.ts"]
     }
