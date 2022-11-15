@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { MovieDto } from './dto/movie.dto';
 import { FindManyMovieDto } from './dto/find-many-movie.dto';
 import { MovieDocsResponseDto } from './dto/movie-docs.response.dto';
+import { MovieIncludeBuilder } from './movie-include.builder';
 
 @Injectable()
 export class MovieService {
@@ -13,11 +14,19 @@ export class MovieService {
     const { page, limit } = pagination;
     const skip = limit * (page - 1);
 
+    const include = new MovieIncludeBuilder()
+      .set('sequelsAndPrequels')
+      .set('similarMovies')
+      .set('persons')
+      .set('images')
+      .build();
+
     const where = ToWhere<MovieDto, Prisma.MovieWhereInput>(query);
 
     const [movies, count] = await Promise.all([
       this.prisma.movie.findMany({
         where,
+        include,
         skip: skip,
         take: limit,
       }),
@@ -36,52 +45,16 @@ export class MovieService {
   }
 
   async findOne(kpId: number): Promise<MovieDto> {
+    const include = new MovieIncludeBuilder()
+      .set('sequelsAndPrequels')
+      .set('similarMovies')
+      .set('persons')
+      .set('images')
+      .build();
+
     return this.prisma.movie.findUnique({
-      where: {
-        kpId,
-      },
-      include: {
-        sequelsAndPrequels: {
-          include: {
-            movie: {
-              select: {
-                kpId: true,
-                name: true,
-                enName: true,
-                rating: true,
-                year: true,
-              },
-            },
-          },
-        },
-        persons: {
-          include: {
-            person: true,
-          },
-        },
-        similarMovies: {
-          include: {
-            movie: {
-              select: {
-                kpId: true,
-                name: true,
-                enName: true,
-                rating: true,
-                year: true,
-              },
-            },
-          },
-        },
-        facts: true,
-        images: {
-          where: {
-            type: {
-              in: ['POSTER', 'BACKDROP'],
-            },
-            isMain: true,
-          },
-        },
-      },
+      where: { kpId },
+      include,
     });
   }
 }
