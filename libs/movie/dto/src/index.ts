@@ -13,3 +13,4 @@ export * from './movie-technology.dto';
 export * from './movie-votes.dto';
 export * from './movie.dto';
 export * from './find-many-movie.dto';
+export * from './movie-sort.dto';
