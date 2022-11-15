@@ -1,9 +1,8 @@
 import { Prisma, PrismaService, ToWhere } from '@prisma';
 import { Injectable } from '@nestjs/common';
-import { MovieDto } from './dto/movie.dto';
-import { FindManyMovieDto } from './dto/find-many-movie.dto';
-import { MovieDocsResponseDto } from './dto/movie-docs.response.dto';
+
 import { MovieIncludeBuilder } from './movie-include.builder';
+import { FindManyMovieDto, MovieDocsResponseDto, MovieDto } from '@movie/dto';
 
 @Injectable()
 export class MovieService {

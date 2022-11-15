@@ -1,12 +1,10 @@
 import { Controller, Get, Param, Query, ValidationPipe } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { MovieDto } from './dto/movie.dto';
 import { MovieService } from './movie.service';
-import { FindManyMovieDto } from './dto/find-many-movie.dto';
 import { ParseDotNotationQuery } from '@common/pipes';
-import { ApiDotNotationQuery } from '@common/decorators';
 import { PaginatedQueryDto } from '@common/dto';
-import { MovieDocsResponseDto } from './dto/movie-docs.response.dto';
+import { ApiDotNotationQuery } from '@common/decorators';
+import { FindManyMovieDto, MovieDocsResponseDto, MovieDto } from '@movie/dto';
 
 @ApiTags('Movies')
 @Controller('movie')
