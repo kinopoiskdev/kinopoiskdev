@@ -1,1 +1,3 @@
-export type sortType = '1' | '-1' | 'asc' | 'desc' | 'ASC' | 'DESC';
+import { SortTypeEnum } from '@common/enum';
+
+export type SortType = keyof typeof SortTypeEnum;
