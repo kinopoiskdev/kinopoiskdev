@@ -20,6 +20,7 @@ export class MovieService {
       .set('persons')
       .set('images')
       .set('videos')
+      .set('seasons')
       .build();
 
     const where = ToWhere<MovieDto, Prisma.MovieWhereInput>(query);
@@ -52,6 +53,7 @@ export class MovieService {
       .set('persons')
       .set('images')
       .set('videos')
+      .set('seasons')
       .build();
 
     return this.prisma.movie.findUnique({

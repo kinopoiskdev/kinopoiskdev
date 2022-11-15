@@ -49,8 +49,6 @@ export class MovieIncludeBuilder implements MovieInclude {
     ImageType.BACKDROP
   );
 
-  private readonly _videos: Prisma.VideoFindManyArgs | boolean = true;
-
   private imagesByTypes(...types: ImageType[]): Prisma.ImageFindManyArgs {
     const where: Prisma.ImageWhereInput = { isMain: true };
     if (types.length > 1) where.type = { in: types };
@@ -59,7 +57,7 @@ export class MovieIncludeBuilder implements MovieInclude {
   }
 
   set(key: Includes) {
-    return Object.assign(this, { [key]: this[`_${key}`] });
+    return Object.assign(this, { [key]: this[`_${key}`] || true });
   }
 
   get toInstance(): MovieInclude {
