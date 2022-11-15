@@ -1,15 +1,6 @@
 import { ImageType, Prisma } from '@prisma';
 import { plainToInstance } from 'class-transformer';
-
-type ValueOf<T> = keyof T;
-export type MovieIncludes = Omit<Prisma.MovieInclude, '_count'>;
-type Includes = ValueOf<Omit<Prisma.MovieInclude, '_count'>>;
-
-class MovieInclude implements MovieIncludes {
-  constructor(partial: MovieInclude) {
-    Object.assign(this, partial);
-  }
-}
+import { Includes, MovieInclude } from './movie-include';
 
 export class MovieIncludeBuilder implements MovieInclude {
   public relatedMovie?: Prisma.MovieArgs;
