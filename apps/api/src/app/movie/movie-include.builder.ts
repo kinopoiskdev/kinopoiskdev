@@ -17,6 +17,7 @@ export class MovieIncludeBuilder implements MovieInclude {
   public similarMovies?: Prisma.SimilarMovieFindManyArgs;
   public persons?: Prisma.MovieOnPersonFindManyArgs;
   public images?: Prisma.ImageFindManyArgs;
+  public videos?: Prisma.VideoFindManyArgs | boolean;
 
   public readonly _relatedMovie: Prisma.MovieArgs = {
     select: {
@@ -47,6 +48,8 @@ export class MovieIncludeBuilder implements MovieInclude {
     ImageType.POSTER,
     ImageType.BACKDROP
   );
+
+  private readonly _videos: Prisma.VideoFindManyArgs | boolean = true;
 
   private imagesByTypes(...types: ImageType[]): Prisma.ImageFindManyArgs {
     const where: Prisma.ImageWhereInput = { isMain: true };
