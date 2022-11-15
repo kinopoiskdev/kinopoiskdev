@@ -1,10 +1,52 @@
 import { ImageType, Prisma } from '@prisma';
+import { plainToInstance } from 'class-transformer';
 
 type ValueOf<T> = keyof T;
-type MovieInclude = ValueOf<Omit<Prisma.MovieInclude, '_count'>>;
+export type MovieIncludes = Omit<Prisma.MovieInclude, '_count'>;
+type Includes = ValueOf<Omit<Prisma.MovieInclude, '_count'>>;
 
-export class MovieIncludeBuilder implements Prisma.MovieInclude {
-  private readonly include: Prisma.MovieInclude = {};
+class MovieInclude implements MovieIncludes {
+  constructor(partial: MovieInclude) {
+    Object.assign(this, partial);
+  }
+}
+
+export class MovieIncludeBuilder implements MovieInclude {
+  public relatedMovie?: Prisma.MovieArgs;
+  public sequelsAndPrequels?: Prisma.SequelsAndPrequelFindManyArgs;
+  public similarMovies?: Prisma.SimilarMovieFindManyArgs;
+  public persons?: Prisma.MovieOnPersonFindManyArgs;
+  public images?: Prisma.ImageFindManyArgs;
+
+  public readonly _relatedMovie: Prisma.MovieArgs = {
+    select: {
+      kpId: true,
+      name: true,
+      enName: true,
+      rating: true,
+      year: true,
+      images: this.imagesByTypes(ImageType.POSTER),
+    },
+  };
+  private readonly _sequelsAndPrequels: Prisma.SequelsAndPrequelFindManyArgs = {
+    include: { movie: this._relatedMovie },
+  };
+  private readonly _similarMovies: Prisma.SimilarMovieFindManyArgs = {
+    include: { movie: this._relatedMovie },
+  };
+  private readonly _persons: Prisma.MovieOnPersonFindManyArgs = {
+    include: {
+      person: {
+        include: {
+          photos: this.imagesByTypes(ImageType.PHOTO),
+        },
+      },
+    },
+  };
+  private readonly _images: Prisma.ImageFindManyArgs = this.imagesByTypes(
+    ImageType.POSTER,
+    ImageType.BACKDROP
+  );
 
   private imagesByTypes(...types: ImageType[]): Prisma.ImageFindManyArgs {
     const where: Prisma.ImageWhereInput = { isMain: true };
@@ -13,48 +55,17 @@ export class MovieIncludeBuilder implements Prisma.MovieInclude {
     return { where };
   }
 
-  public get relatedMovie(): Prisma.MovieArgs {
-    return {
-      select: {
-        kpId: true,
-        name: true,
-        enName: true,
-        rating: true,
-        year: true,
-        images: this.imagesByTypes(ImageType.POSTER),
-      },
-    };
+  set(key: Includes) {
+    return Object.assign(this, { [key]: this[`_${key}`] });
   }
 
-  public get sequelsAndPrequels(): Prisma.SequelsAndPrequelFindManyArgs {
-    return { include: { movie: this.relatedMovie } };
+  get toInstance(): MovieInclude {
+    return plainToInstance(MovieInclude, this, {
+      excludePrefixes: ['_'],
+    });
   }
 
-  public get similarMovies() {
-    return { include: { movie: this.relatedMovie } };
-  }
-
-  public get persons() {
-    return {
-      include: {
-        person: {
-          include: {
-            photos: this.imagesByTypes(ImageType.PHOTO),
-          },
-        },
-      },
-    };
-  }
-
-  public get images() {
-    return this.imagesByTypes(ImageType.POSTER, ImageType.BACKDROP);
-  }
-
-  public set(key: MovieInclude) {
-    this.include[key] = this[key];
-  }
-
-  build(): Prisma.MovieInclude {
-    return this.include;
+  build() {
+    return new MovieInclude(this.toInstance);
   }
 }
