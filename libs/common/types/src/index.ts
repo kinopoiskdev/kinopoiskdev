@@ -1,1 +1,1 @@
-export * from './lib/common-types';
+export * from './sort.type';
