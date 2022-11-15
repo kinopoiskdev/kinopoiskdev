@@ -221,19 +221,19 @@ type SeasonEpisode {
 }
 
 model Video {
-  id      String      @id @default(auto()) @map("_id") @db.ObjectId
-  kpId    Int
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  movieKpId Int
   // String properties
-  name    String
-  url     String      @unique()
+  name      String
+  url       String      @unique()
   // Int properties
-  size    Int?
+  size      Int?
   // Enum properties
-  source  VideoSource
-  type    VideoType?
+  source    VideoSource
+  type      VideoType?
   // Relations
-  movie   Movie       @relation(fields: [movieId], references: [id])
-  movieId String      @db.ObjectId
+  movie     Movie       @relation(fields: [movieId], references: [id])
+  movieId   String      @db.ObjectId
 }
 
 model Image {
@@ -447,8 +447,8 @@ model Movie {
   similarMovies             SimilarMovie[]      @relation("simalarMovie")
   relatedSimilarMovies      SimilarMovie[]      @relation("relatedSimalarMovie")
 
-  @@fulltext([name, enName, alternativeName, description, shortDescription, slogan])
   @@index([externalId.imdb], name: "Movie_externalId_imdb_index")
   @@index([externalId.tmdb], name: "Movie_externalId_tmdb_index")
   @@index([externalId.kpHD], name: "Movie_externalId_kpHD_index")
+  @@fulltext([name, enName, alternativeName, description, shortDescription, slogan])
 }
