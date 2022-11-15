@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/ban-types*/
 
 import { applyDecorators } from '@nestjs/common';
-import { ApiQuery } from '@nestjs/swagger';
+import { ApiQuery, ApiQueryOptions } from '@nestjs/swagger';
+import { SortTypeEnum } from '@common/enum';
 
 const getPagingDecorators = (fn: Function) => {
   const constructor = fn.prototype;
@@ -30,7 +31,11 @@ const getPagingDecorators = (fn: Function) => {
   });
 };
 
-const getQueryDecorators = (fn: Function) => {
+const getQueryDecorators = (
+  fn: Function,
+  fieldQuery: ApiQueryOptions,
+  valueQuery: ApiQueryOptions
+) => {
   const constructor = fn.prototype;
   const properties = Reflect.getMetadata(
     'swagger/apiModelPropertiesArray',
@@ -63,24 +68,46 @@ const getQueryDecorators = (fn: Function) => {
 
   return [
     ApiQuery({
-      name: 'field',
+      name: fieldQuery.name,
       required: false,
-      description: 'Поля для выборки',
+      description: fieldQuery.description,
       isArray: true,
       enum: field,
     }),
-    ApiQuery({
-      name: 'search',
-      required: false,
-      description: 'Значения полей',
-      isArray: true,
-      type: 'string',
-    }),
+    ApiQuery(valueQuery),
   ];
 };
 
-export const ApiDotNotationQuery = (query: Function, pagination?: Function) => {
-  let decorators = getQueryDecorators(query);
+export const ApiDotNotationQuery = (
+  query: Function,
+  sortQuery?: Function,
+  pagination?: Function
+) => {
+  let decorators = getQueryDecorators(
+    query,
+    { name: 'field', description: 'Поля для выборки' },
+    {
+      name: 'search',
+      description: 'Значения полей',
+      required: false,
+      isArray: true,
+      type: 'string',
+    }
+  );
+  if (pagination)
+    decorators = decorators.concat(
+      getQueryDecorators(
+        sortQuery,
+        { name: 'sortField', description: 'Поля для сортировки' },
+        {
+          name: 'sort',
+          description: 'Значения полей сортировки',
+          required: false,
+          isArray: false,
+          enum: SortTypeEnum,
+        }
+      )
+    );
   if (pagination)
     decorators = decorators.concat(getPagingDecorators(pagination));
   return applyDecorators(...decorators);
