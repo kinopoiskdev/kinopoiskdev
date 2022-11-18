@@ -36,13 +36,13 @@ export class MovieService {
       }),
     ]);
 
-    return {
+    return new MovieDocsResponseDto({
       docs: movies,
       total: count,
       limit,
       page,
       pages: 1,
-    };
+    });
   }
 
   async findOne(kpId: number): Promise<MovieDto> {
@@ -55,9 +55,10 @@ export class MovieService {
       .set('seasons')
       .build();
 
-    return this.prisma.movie.findUnique({
+    const movie = await this.prisma.movie.findUnique({
       where: { kpId },
       include,
     });
+    return new MovieDto(movie);
   }
 }

@@ -1,4 +1,13 @@
-import { Controller, Get, Param, Query, ValidationPipe } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  Controller,
+  Get,
+  Param,
+  Query,
+  SerializeOptions,
+  UseInterceptors,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MovieService } from './movie.service';
 import { ParseDotNotationQuery } from '@common/pipes';
@@ -11,6 +20,8 @@ import {
   MovieSortDto,
 } from '@movie/dto';
 
+@UseInterceptors(ClassSerializerInterceptor)
+@SerializeOptions({ excludeExtraneousValues: true })
 @ApiTags('Movies')
 @Controller('movie')
 export class MovieController {
@@ -28,7 +39,7 @@ export class MovieController {
 
   @Get(':kpId')
   @ApiResponse({ type: MovieDto })
-  async findByKpId(@Param('kpId') kpId: number) {
+  async findByKpId(@Param('kpId') kpId: number): Promise<MovieDto> {
     return this.movieService.findOne(kpId);
   }
 }
