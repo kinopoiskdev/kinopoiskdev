@@ -1,6 +1,6 @@
-import { MovieStatus, MovieType } from '@prisma';
+import { ImageType, MovieStatus, MovieType } from '@prisma';
 import { IsNumber, IsOptional } from 'class-validator';
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import { ApiModelPropertyOptional } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { MovieWatchabilityDto } from './watchability';
@@ -15,6 +15,8 @@ import { MovieVotesDto } from './movie-votes.dto';
 import { MovieFeesDto } from './fees';
 import { MovieReleaseYearsDto } from './movie-release-years.dto';
 import { ParseNumber, ValuesToObjects } from '@common/decorators';
+import { MovieImageDto } from './movie-image.dto';
+import { ParseImageByType } from '../../../../common/decorators/src/transform/parse-image-by-type.decorator';
 
 export class MovieDto {
   // Id properties
@@ -106,6 +108,18 @@ export class MovieDto {
   status: MovieStatus;
 
   // Type properties
+  @Expose()
+  @ApiModelPropertyOptional({ type: () => MovieImageDto })
+  @ParseImageByType(ImageType.POSTER)
+  @Type(() => MovieImageDto)
+  poster: MovieImageDto;
+
+  @Expose()
+  @ApiModelPropertyOptional({ type: () => MovieImageDto })
+  @ParseImageByType(ImageType.BACKDROP)
+  @Type(() => MovieImageDto)
+  backdrop: MovieImageDto;
+
   @Expose()
   @ApiModelPropertyOptional({ type: () => MovieRatingDto })
   rating: MovieRatingDto;
