@@ -7,6 +7,7 @@ import {
   SerializeOptions,
   UseInterceptors,
   ValidationPipe,
+  Version,
 } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MovieService } from './movie.service';
@@ -19,6 +20,7 @@ import {
   MovieDto,
   MovieSortDto,
 } from '@movie/dto';
+import { VersionsEnum } from '@common/enum';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @SerializeOptions({ excludeExtraneousValues: true })
@@ -38,6 +40,7 @@ export class MovieController {
   }
 
   @Get(':kpId')
+  @Version(VersionsEnum.V2)
   @ApiResponse({ type: MovieDto })
   async findByKpId(@Param('kpId') kpId: number): Promise<MovieDto> {
     return this.movieService.findOne(kpId);

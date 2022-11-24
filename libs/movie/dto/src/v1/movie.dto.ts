@@ -1,6 +1,6 @@
 import { MovieStatus, MovieType } from '@prisma';
 import { IsNumber, IsOptional } from 'class-validator';
-import { Expose, Transform } from 'class-transformer';
+import { Expose } from 'class-transformer';
 import { ApiModelPropertyOptional } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { MovieWatchabilityDto } from './watchability';
@@ -14,18 +14,16 @@ import { MovieBudgetDto } from './movie-budget.dto';
 import { MovieVotesDto } from './movie-votes.dto';
 import { MovieFeesDto } from './fees';
 import { MovieReleaseYearsDto } from './movie-release-years.dto';
+import { ParseNumber } from '@common/decorators';
 
 export class MovieDto {
   // Id properties
-  @ApiModelPropertyOptional()
-  @Expose()
-  id: string;
 
-  @Expose()
+  @Expose({ name: 'id' })
   @ApiModelPropertyOptional({ description: 'Id фильма с кинопоиска' })
   @IsOptional()
   @IsNumber()
-  @Transform(({ value }) => Number(value))
+  @ParseNumber()
   kpId: number;
 
   @Expose()
