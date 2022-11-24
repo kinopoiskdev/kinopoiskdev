@@ -14,9 +14,12 @@ import { MovieBudgetDto } from './movie-budget.dto';
 import { MovieVotesDto } from './movie-votes.dto';
 import { MovieFeesDto } from './fees';
 import { MovieReleaseYearsDto } from './movie-release-years.dto';
-import { ParseNumber, ValuesToObjects } from '@common/decorators';
+import {
+  ParseImageByType,
+  ParseNumber,
+  ValuesToObjects,
+} from '@common/decorators';
 import { MovieImageDto } from './movie-image.dto';
-import { ParseImageByType } from '../../../../common/decorators/src/transform/parse-image-by-type.decorator';
 
 export class MovieDto {
   // Id properties
