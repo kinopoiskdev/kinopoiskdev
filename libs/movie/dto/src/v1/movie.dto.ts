@@ -14,7 +14,7 @@ import { MovieBudgetDto } from './movie-budget.dto';
 import { MovieVotesDto } from './movie-votes.dto';
 import { MovieFeesDto } from './fees';
 import { MovieReleaseYearsDto } from './movie-release-years.dto';
-import { ParseNumber } from '@common/decorators';
+import { ParseNumber, ValuesToObjects } from '@common/decorators';
 
 export class MovieDto {
   // Id properties
@@ -40,6 +40,7 @@ export class MovieDto {
 
   @Expose()
   @ApiModelPropertyOptional({ isArray: true })
+  @ValuesToObjects('name')
   names: string[];
 
   @Expose()
