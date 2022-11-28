@@ -1,4 +1,4 @@
-import { ImageType, MovieStatus, MovieType } from '@prisma';
+import { ImageType, Movie, MovieStatus, MovieType } from '@prisma';
 import { IsNumber, IsOptional } from 'class-validator';
 import { Expose, Type } from 'class-transformer';
 import { ApiModelPropertyOptional } from '@nestjs/swagger/dist/decorators/api-model-property.decorator';
@@ -21,7 +21,7 @@ import {
 } from '@common/decorators';
 import { MovieImageDto } from './movie-image.dto';
 
-export class MovieDto {
+export class MovieDto<T = Movie> {
   // Id properties
 
   @Expose({ name: 'id' })
@@ -176,7 +176,7 @@ export class MovieDto {
   @ApiPropertyOptional({ type: Date })
   updatedAt: Date;
 
-  constructor(partial: Partial<MovieDto>) {
+  constructor(partial: Partial<MovieDto<T>>) {
     Object.assign(this, partial);
   }
 }
